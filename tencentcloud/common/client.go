@@ -4,15 +4,16 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"log"
+	// "log"
 	"net/http"
 	"net/http/httputil"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
+	log "github.com/cihub/seelog"
 
+	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
 	tchttp "github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/http"
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
@@ -71,10 +72,10 @@ func (c *Client) sendWithSignatureV1(request tchttp.Request, response tchttp.Res
 	if c.debug {
 		outbytes, err := httputil.DumpRequest(httpRequest, true)
 		if err != nil {
-			log.Printf("[ERROR] dump request failed because %s", err)
+			log.Infof("[ERROR] dump request failed because %s", err)
 			return err
 		}
-		log.Printf("[DEBUG] http request = %s", outbytes)
+		log.Infof("[DEBUG] http request = %s", outbytes)
 	}
 	httpResponse, err := c.httpClient.Do(httpRequest)
 	if err != nil {
@@ -202,10 +203,10 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 	if c.debug {
 		outbytes, err := httputil.DumpRequest(httpRequest, true)
 		if err != nil {
-			log.Printf("[ERROR] dump request failed because %s", err)
+			log.Infof("[ERROR] dump request failed because %s", err)
 			return err
 		}
-		log.Printf("[DEBUG] http request = %s", outbytes)
+		log.Infof("[DEBUG] http request = %s", outbytes)
 	}
 	httpResponse, err := c.httpClient.Do(httpRequest)
 	if err != nil {
@@ -224,8 +225,8 @@ func (c *Client) Init(region string) *Client {
 	c.httpClient = &http.Client{}
 	c.region = region
 	c.signMethod = "TC3-HMAC-SHA256"
-	c.debug = false
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	c.debug = true
+	//log.SetFlags(log.LstdFlags | log.Lshortfile)
 	return c
 }
 

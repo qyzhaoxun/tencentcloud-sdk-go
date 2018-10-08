@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	//"log"
+	// "log"
 	"net/http"
+
+	log "github.com/cihub/seelog"
 
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
 )
@@ -67,7 +69,7 @@ func ParseFromHttpResponse(hr *http.Response, response Response) (err error) {
 		msg := fmt.Sprintf("Request fail with http status code: %s, with body: %s", hr.Status, body)
 		return errors.NewTencentCloudSDKError("ClientError.HttpStatusCodeError", msg, "")
 	}
-	//log.Printf("[DEBUG] Response Body=%s", body)
+	log.Infof("[DEBUG] Response Body=%s", body)
 	err = response.ParseErrorFromHTTPResponse(body)
 	if err != nil {
 		return
