@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	log "github.com/cihub/seelog"
-
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
 )
 

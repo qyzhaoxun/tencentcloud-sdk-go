@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/profile"
