@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
+	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common"
+	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/profile"
+	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/regions"
+	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
 	"fmt"
-	soe "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/soe/v20180724"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
-	"encoding/json"
+	soe "github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/soe/v20180724"
+	"encoding/base64"
 )
 
 func main() {
