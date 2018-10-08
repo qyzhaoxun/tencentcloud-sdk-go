@@ -4,7 +4,6 @@ import (
 	"io"
 
 	log "github.com/cihub/seelog"
-
 	//"log"
 	"math/rand"
 	"net/url"
@@ -179,7 +178,6 @@ func ConstructParams(req Request) (err error) {
 
 	//log.Infof("[DEBUG] params=%s", req.GetParams())
 	log.Infof("[DEBUG] params=%s", req.GetParams())
-
 	return
 }
 
