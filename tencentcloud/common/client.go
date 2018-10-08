@@ -1,7 +1,8 @@
 package common
 
 import (
-	"log"
+	// "log"
+	log "github.com/cihub/seelog"
 	"net/http"
 	"time"
 
@@ -47,7 +48,7 @@ func (c *Client) Send(request tchttp.Request, response tchttp.Response) (err err
 	if request.GetHttpMethod() == "POST" {
 		httpRequest.Header["Content-Type"] = []string{"application/x-www-form-urlencoded"}
 	}
-	//log.Printf("[DEBUG] http request=%v", httpRequest)
+	log.Infof("[DEBUG] http request=%v", httpRequest)
 	httpResponse, err := c.httpClient.Do(httpRequest)
 	if err != nil {
 		return err
@@ -65,7 +66,7 @@ func (c *Client) Init(region string) *Client {
 	c.region = region
 	c.signMethod = "HmacSHA256"
 	c.debug = false
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	//log.SetFlags(log.LstdFlags | log.Lshortfile)
 	return c
 }
 

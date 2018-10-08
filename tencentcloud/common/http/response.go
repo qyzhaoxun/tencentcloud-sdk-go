@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
+	// "log"
+	log "github.com/cihub/seelog"
 	"net/http"
 
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
@@ -63,7 +64,7 @@ func ParseFromHttpResponse(hr *http.Response, response Response) (err error) {
 	if hr.StatusCode != 200 {
 		return fmt.Errorf("Request fail with status: %s, with body: %s", hr.Status, body)
 	}
-	//log.Printf("[DEBUG] Response Body=%s", body)
+	log.Infof("[DEBUG] Response Body=%s", body)
 	err = response.ParseErrorFromHTTPResponse(body)
 	if err != nil {
 		return
