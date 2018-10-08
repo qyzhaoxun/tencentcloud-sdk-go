@@ -4905,3 +4905,28 @@ func (c *Client) UnassignPrivateIpAddresses(request *UnassignPrivateIpAddressesR
     err = c.Send(request, response)
     return
 }
+
+func NewQueryTaskRequest() (request *QueryTaskRequest) {
+    request = &QueryTaskRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "QueryTask")
+    return
+}
+
+func NewQueryTaskResponse() (response *QueryTaskResponse) {
+    response = &QueryTaskResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（QueryTask）用于查询 Vpc异步接口是否成功。
+func (c *Client) QueryTask(request *QueryTaskRequest) (response *QueryTaskResponse, err error) {
+    if request == nil {
+        request = NewQueryTaskRequest()
+    }
+    response = NewQueryTaskResponse()
+    err = c.Send(request, response)
+    return
+}

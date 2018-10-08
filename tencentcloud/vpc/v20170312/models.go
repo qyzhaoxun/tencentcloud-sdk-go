@@ -9450,6 +9450,40 @@ func (r *UnassignPrivateIpAddressesResponse) FromJsonString(s string) error {
     return json.Unmarshal([]byte(s), &r)
 }
 
+type QueryTaskRequest struct {
+	*tchttp.BaseRequest
+	// 任务ID
+	TaskId *string `json:"TaskId" name:"TaskId"`
+}
+
+func (r *QueryTaskRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *QueryTaskRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type QueryTaskResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+		// 唯一请求ID，每次请求都会返回。定位问题时需要提供该次请求的RequestId。
+		RequestId *string `json:"RequestId" name:"RequestId"`
+		// 状态 可选值 SUCCESS|RUNNING|FAILED
+		Status *string `json:"Status" name:"Status"`
+	} `json:"Response"`
+}
+
+func (r *QueryTaskResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *QueryTaskResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
 type Vpc struct {
 
 	// `VPC`名称。
