@@ -2,10 +2,13 @@ package common
 
 import (
 	"io"
+
 	log "github.com/cihub/seelog"
+
 	//"log"
 	"math/rand"
 	"net/url"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -16,8 +19,9 @@ const (
 	POST = "POST"
 	GET  = "GET"
 
-	RootDomain = "tencentcloudapi.com"
-	Path       = "/"
+	RootDomain         = "tencentcloudapi.com"
+	InternalRootDomain = "internal.tencentcloudapi.com"
+	Path               = "/"
 )
 
 type Request interface {
@@ -141,8 +145,16 @@ func (r *BaseRequest) WithApiInfo(service, version, action string) *BaseRequest 
 	return r
 }
 
+func getRootDomain() string {
+	env := os.Getenv("NETWORK_ENVIRONMENT")
+	if env == "TENCENT_CLOUD_VPC" {
+		return InternalRootDomain
+	}
+	return RootDomain
+}
+
 func GetServiceDomain(service string) (domain string) {
-	domain = service + "." + RootDomain
+	domain = service + "." + getRootDomain()
 	return
 }
 
