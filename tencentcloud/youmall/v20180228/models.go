@@ -17,7 +17,7 @@ package v20180228
 import (
     "encoding/json"
 
-    tchttp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
+    tchttp "github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/http"
 )
 
 type CameraPersonInfo struct {
