@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	// "log"
+	log "github.com/cihub/seelog"
 	"net/http"
 
-	log "github.com/cihub/seelog"
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
 )
 
