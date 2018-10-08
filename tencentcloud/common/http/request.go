@@ -2,7 +2,9 @@ package common
 
 import (
 	"io"
+
 	log "github.com/cihub/seelog"
+
 	//"log"
 	"math/rand"
 	"net/url"
@@ -151,6 +153,7 @@ func getRootDomain() string {
 	if len(env1) > 0 {
 		return env1
 	}
+
 	return RootDomain
 }
 
