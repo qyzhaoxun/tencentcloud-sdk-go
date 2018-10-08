@@ -2598,6 +2598,74 @@ func (r *DeleteCustomerGatewayResponse) FromJsonString(s string) error {
     return json.Unmarshal([]byte(s), &r)
 }
 
+type CreateNetworkInterfaceExRequest struct {
+	*tchttp.BaseRequest
+
+	// VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
+	VpcId *string `json:"VpcId" name:"VpcId"`
+
+	// 弹性网卡名称，最大长度不能超过60个字节。
+	NetworkInterfaceName *string `json:"NetworkInterfaceName" name:"NetworkInterfaceName"`
+
+	// 云服务实例ID。
+	InstanceId 	*string `json:"InstanceId" name:"InstanceId"`
+
+	// 弹性网卡所在的子网实例ID，例如：subnet-0ap8nwca。当ReservedAddress=false时，需要指定SubnetId
+	SubnetId *string `json:"SubnetId" name:"SubnetId"`
+
+	// 弹性网卡描述，可任意命名，但不得超过60个字符。
+	NetworkInterfaceDescription *string `json:"NetworkInterfaceDescription" name:"NetworkInterfaceDescription"`
+
+	// 是否保留网段分配IP，默认为true；当ReservedAddress=false时，需要指定SubnetId
+	IsReservedAddress 	*bool 	`json:"IsReservedAddress" name:"IsReservedAddress"`
+
+	// 业务标识，默认为dockerMaster。
+	Business 	*string 	`json:"Business" name:"Business"`
+
+	// 业务所属项目，默认为Docker。
+	BusinessOwner 	*string 	`json:"BusinessOwner" name:"BusinessOwner"`
+
+	// 是否跨租户创建网卡。默认为true。
+	IsCrossTenant 	*bool 		`json:"IsCrossTenant" name:"IsCrossTenant"`
+
+	// 指定动态分配IP的个数。PrivateIpAddresses和SecondaryPrivateIpAddressCount一起，单次最多分配10个IP。。
+	SecondaryPrivateIpAddressCount *uint64 `json:"SecondaryPrivateIpAddressCount" name:"SecondaryPrivateIpAddressCount"`
+
+	// 指定的内网IP信息，单次最多指定10个。
+	PrivateIpAddresses []*PrivateIpAddressSpecification `json:"PrivateIpAddresses" name:"PrivateIpAddresses" list`
+}
+
+func (r *CreateNetworkInterfaceExRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *CreateNetworkInterfaceExRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+// CreateNetworkInterfaceEx 响应只有RequestId，没有网卡实例
+type CreateNetworkInterfaceExResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 弹性网卡实例。
+		// NetworkInterface *NetworkInterface `json:"NetworkInterface" name:"NetworkInterface"`
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId *string `json:"RequestId" name:"RequestId"`
+	} `json:"Response"`
+}
+
+func (r *CreateNetworkInterfaceExResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *CreateNetworkInterfaceExResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
 type DeleteDirectConnectGatewayCcnRoutesRequest struct {
 	*tchttp.BaseRequest
 

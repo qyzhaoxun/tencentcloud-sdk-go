@@ -5008,3 +5008,4 @@ func (c *Client) DescribeVpcTaskResult(request *DescribeVpcTaskResultRequest) (r
     err = c.Send(request, response)
     return
 }
+
