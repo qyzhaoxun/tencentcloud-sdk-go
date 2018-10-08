@@ -2,7 +2,7 @@ package common
 
 import (
 	"io"
-
+	log "github.com/cihub/seelog"
 	//"log"
 	"math/rand"
 	"net/url"
@@ -120,6 +120,7 @@ func GetUrlQueriesEncoded(params map[string]string) string {
 func (r *BaseRequest) GetBodyReader() io.Reader {
 	if r.httpMethod == POST {
 		s := GetUrlQueriesEncoded(r.params)
+		log.Infof("[DEBUG] body: %s", s)
 		return strings.NewReader(s)
 	} else {
 		return strings.NewReader("")
@@ -173,12 +174,12 @@ func CompleteCommonParams(request Request, region string) {
 func ConstructParams(req Request) (err error) {
 	value := reflect.ValueOf(req).Elem()
 	err = flatStructure(value, req, "")
-	//log.Printf("[DEBUG] params=%s", req.GetParams())
+	log.Infof("[DEBUG] params=%s", req.GetParams())
 	return
 }
 
 func flatStructure(value reflect.Value, request Request, prefix string) (err error) {
-	//log.Printf("[DEBUG] reflect value: %v", value.Type())
+	log.Infof("[DEBUG] reflect value: %v", value.Type())
 	valueType := value.Type()
 	for i := 0; i < valueType.NumField(); i++ {
 		tag := valueType.Field(i).Tag

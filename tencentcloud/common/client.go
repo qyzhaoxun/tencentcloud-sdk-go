@@ -7,13 +7,12 @@ import (
 	"os"
 
 	// "log"
+	log "github.com/cihub/seelog"
 	"net/http"
 	"net/http/httputil"
 	"strconv"
 	"strings"
 	"time"
-
-	log "github.com/cihub/seelog"
 
 	"github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/errors"
 	tchttp "github.com/qyzhaoxun/tencentcloud-sdk-go/tencentcloud/common/http"
@@ -83,6 +82,7 @@ func (c *Client) sendWithSignatureV1(request tchttp.Request, response tchttp.Res
 		}
 		log.Infof("[DEBUG] http request = %s", outbytes)
 	}
+	log.Infof("[DEBUG] http request=%v", httpRequest)
 	httpResponse, err := c.httpClient.Do(httpRequest)
 	if err != nil {
 		msg := fmt.Sprintf("Fail to get response because %s", err)
@@ -234,8 +234,8 @@ func (c *Client) GetRegion() string {
 func (c *Client) Init(region string) *Client {
 	c.httpClient = &http.Client{}
 	c.region = region
-	c.signMethod = "TC3-HMAC-SHA256"
-	c.debug = true
+	c.signMethod = "HmacSHA256"
+	c.debug = false
 	//log.SetFlags(log.LstdFlags | log.Lshortfile)
 	return c
 }
