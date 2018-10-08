@@ -82,6 +82,7 @@ func (c *Client) sendWithSignatureV1(request tchttp.Request, response tchttp.Res
 		}
 		log.Infof("[DEBUG] http request = %s", outbytes)
 	}
+
 	log.Infof("[DEBUG] http request=%v", httpRequest)
 	httpResponse, err := c.httpClient.Do(httpRequest)
 	if err != nil {

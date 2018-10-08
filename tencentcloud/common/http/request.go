@@ -2,9 +2,7 @@ package common
 
 import (
 	"io"
-
 	log "github.com/cihub/seelog"
-
 	//"log"
 	"math/rand"
 	"net/url"
@@ -176,7 +174,10 @@ func CompleteCommonParams(request Request, region string) {
 func ConstructParams(req Request) (err error) {
 	value := reflect.ValueOf(req).Elem()
 	err = flatStructure(value, req, "")
+
 	//log.Infof("[DEBUG] params=%s", req.GetParams())
+	log.Infof("[DEBUG] params=%s", req.GetParams())
+
 	return
 }
 

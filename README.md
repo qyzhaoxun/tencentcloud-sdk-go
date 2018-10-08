@@ -161,9 +161,6 @@ import "crypto/tls"
 
 再次强调，除非你知道自己在做什么，并明白由此带来的风险，否则不要尝试关闭服务器证书校验。
 =======
->>>>>>> 5394059... update repo path to fork repo
-=======
->>>>>>> cba12ab... update repo path to fork repo
 
 # 支持产品列表
 
