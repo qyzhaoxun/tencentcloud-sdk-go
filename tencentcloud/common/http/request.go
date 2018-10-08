@@ -5,6 +5,7 @@ import (
 	//"log"
 	"math/rand"
 	"net/url"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -15,8 +16,9 @@ const (
 	POST = "POST"
 	GET  = "GET"
 
-	RootDomain = "tencentcloudapi.com"
-	Path       = "/"
+	RootDomain         = "tencentcloudapi.com"
+	InternalRootDomain = "internal.tencentcloudapi.com"
+	Path               = "/"
 )
 
 type Request interface {
@@ -138,8 +140,20 @@ func (r *BaseRequest) WithApiInfo(service, version, action string) *BaseRequest 
 	return r
 }
 
+func getRootDomain() string {
+	env := os.Getenv("NETWORK_ENVIRONMENT")
+	if env == "TENCENT_CLOUD_VPC" {
+		return InternalRootDomain
+	}
+	env1 := os.Getenv("TENCENT_CLOUD_APIV3_ROOT_DOMAIN")
+	if len(env1) > 0 {
+		return env1
+	}
+	return RootDomain
+}
+
 func GetServiceDomain(service string) (domain string) {
-	domain = service + "." + RootDomain
+	domain = service + "." + getRootDomain()
 	return
 }
 
