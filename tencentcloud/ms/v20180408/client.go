@@ -26,16 +26,18 @@ type Client struct {
     common.Client
 }
 
+// Deprecated
 func NewClientWithSecretId(secretId, secretKey, region string) (client *Client, err error) {
+    cpf := profile.NewClientProfile()
     client = &Client{}
-    client.Init(region).WithSecretId(secretId, secretKey)
+    client.Init(region).WithSecretId(secretId, secretKey).WithProfile(cpf)
     return
 }
 
 func NewClient(credential *common.Credential, region string, clientProfile *profile.ClientProfile) (client *Client, err error) {
     client = &Client{}
     client.Init(region).
-        WithSecretId(credential.SecretId, credential.SecretKey).
+        WithCredential(credential).
         WithProfile(clientProfile)
     return
 }
@@ -62,6 +64,31 @@ func (c *Client) CreateBindInstance(request *CreateBindInstanceRequest) (respons
         request = NewCreateBindInstanceRequest()
     }
     response = NewCreateBindInstanceResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewCreateCosSecKeyInstanceRequest() (request *CreateCosSecKeyInstanceRequest) {
+    request = &CreateCosSecKeyInstanceRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("ms", APIVersion, "CreateCosSecKeyInstance")
+    return
+}
+
+func NewCreateCosSecKeyInstanceResponse() (response *CreateCosSecKeyInstanceResponse) {
+    response = &CreateCosSecKeyInstanceResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 获取云COS文件存储临时密钥，密钥仅限于临时上传文件，有访问限制和时效性。
+func (c *Client) CreateCosSecKeyInstance(request *CreateCosSecKeyInstanceRequest) (response *CreateCosSecKeyInstanceResponse, err error) {
+    if request == nil {
+        request = NewCreateCosSecKeyInstanceRequest()
+    }
+    response = NewCreateCosSecKeyInstanceResponse()
     err = c.Send(request, response)
     return
 }
@@ -364,6 +391,31 @@ func (c *Client) DescribeShieldResult(request *DescribeShieldResultRequest) (res
         request = NewDescribeShieldResultRequest()
     }
     response = NewDescribeShieldResultResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDescribeUserBaseInfoInstanceRequest() (request *DescribeUserBaseInfoInstanceRequest) {
+    request = &DescribeUserBaseInfoInstanceRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("ms", APIVersion, "DescribeUserBaseInfoInstance")
+    return
+}
+
+func NewDescribeUserBaseInfoInstanceResponse() (response *DescribeUserBaseInfoInstanceResponse) {
+    response = &DescribeUserBaseInfoInstanceResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 获取用户基础信息
+func (c *Client) DescribeUserBaseInfoInstance(request *DescribeUserBaseInfoInstanceRequest) (response *DescribeUserBaseInfoInstanceResponse, err error) {
+    if request == nil {
+        request = NewDescribeUserBaseInfoInstanceRequest()
+    }
+    response = NewDescribeUserBaseInfoInstanceResponse()
     err = c.Send(request, response)
     return
 }

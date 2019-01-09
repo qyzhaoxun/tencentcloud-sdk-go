@@ -26,16 +26,18 @@ type Client struct {
     common.Client
 }
 
+// Deprecated
 func NewClientWithSecretId(secretId, secretKey, region string) (client *Client, err error) {
+    cpf := profile.NewClientProfile()
     client = &Client{}
-    client.Init(region).WithSecretId(secretId, secretKey)
+    client.Init(region).WithSecretId(secretId, secretKey).WithProfile(cpf)
     return
 }
 
 func NewClient(credential *common.Credential, region string, clientProfile *profile.ClientProfile) (client *Client, err error) {
     client = &Client{}
     client.Init(region).
-        WithSecretId(credential.SecretId, credential.SecretKey).
+        WithCredential(credential).
         WithProfile(clientProfile)
     return
 }
@@ -93,6 +95,31 @@ func (c *Client) AssociateInstancesKeyPairs(request *AssociateInstancesKeyPairsR
         request = NewAssociateInstancesKeyPairsRequest()
     }
     response = NewAssociateInstancesKeyPairsResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewAssociateSecurityGroupsRequest() (request *AssociateSecurityGroupsRequest) {
+    request = &AssociateSecurityGroupsRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("cvm", APIVersion, "AssociateSecurityGroups")
+    return
+}
+
+func NewAssociateSecurityGroupsResponse() (response *AssociateSecurityGroupsResponse) {
+    response = &AssociateSecurityGroupsResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口 (AssociateSecurityGroups) 用于绑定安全组到指定实例。
+func (c *Client) AssociateSecurityGroups(request *AssociateSecurityGroupsRequest) (response *AssociateSecurityGroupsResponse, err error) {
+    if request == nil {
+        request = NewAssociateSecurityGroupsRequest()
+    }
+    response = NewAssociateSecurityGroupsResponse()
     err = c.Send(request, response)
     return
 }
@@ -769,6 +796,31 @@ func (c *Client) DisassociateInstancesKeyPairs(request *DisassociateInstancesKey
     return
 }
 
+func NewDisassociateSecurityGroupsRequest() (request *DisassociateSecurityGroupsRequest) {
+    request = &DisassociateSecurityGroupsRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("cvm", APIVersion, "DisassociateSecurityGroups")
+    return
+}
+
+func NewDisassociateSecurityGroupsResponse() (response *DisassociateSecurityGroupsResponse) {
+    response = &DisassociateSecurityGroupsResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口 (DisassociateSecurityGroups) 用于解绑实例的指定安全组。
+func (c *Client) DisassociateSecurityGroups(request *DisassociateSecurityGroupsRequest) (response *DisassociateSecurityGroupsResponse, err error) {
+    if request == nil {
+        request = NewDisassociateSecurityGroupsRequest()
+    }
+    response = NewDisassociateSecurityGroupsResponse()
+    err = c.Send(request, response)
+    return
+}
+
 func NewImportImageRequest() (request *ImportImageRequest) {
     request = &ImportImageRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -982,7 +1034,7 @@ func NewInquiryPriceResizeInstanceDisksResponse() (response *InquiryPriceResizeI
 
 // 本接口 (InquiryPriceResizeInstanceDisks) 用于扩容实例的数据盘询价。
 // 
-// * 目前只支持扩容随实例购买的数据盘询价，且[数据盘类型](/document/api/213/9452#block_device)为：`CLOUD_BASIC`、`CLOUD_PREMIUM`、`CLOUD_SSD`。
+// * 目前只支持扩容非弹性数据盘（[`DescribeDisks`](https://cloud.tencent.com/document/api/362/16315)接口返回值中的`Portable`为`false`表示非弹性）询价，且[数据盘类型](/document/api/213/9452#block_device)为：`CLOUD_BASIC`、`CLOUD_PREMIUM`、`CLOUD_SSD`。
 // * 目前不支持[CDH](https://cloud.tencent.com/document/product/416)实例使用该接口扩容数据盘询价。* 仅支持包年包月实例随机器购买的数据盘。* 目前只支持扩容一块数据盘询价。
 func (c *Client) InquiryPriceResizeInstanceDisks(request *InquiryPriceResizeInstanceDisksRequest) (response *InquiryPriceResizeInstanceDisksResponse, err error) {
     if request == nil {
@@ -1140,10 +1192,11 @@ func NewModifyInstancesAttributeResponse() (response *ModifyInstancesAttributeRe
     return
 }
 
-// 本接口 (ModifyInstancesAttribute) 用于修改实例的属性（目前只支持修改实例的名称）。
+// 本接口 (ModifyInstancesAttribute) 用于修改实例的属性（目前只支持修改实例的名称和关联的安全组）。
 // 
 // * “实例名称”仅为方便用户自己管理之用，腾讯云并不以此名称作为提交工单或是进行实例管理操作的依据。
 // * 支持批量操作。每次请求批量实例的上限为100。
+// * 修改关联安全组时，子机原来关联的安全组会被解绑。
 func (c *Client) ModifyInstancesAttribute(request *ModifyInstancesAttributeRequest) (response *ModifyInstancesAttributeResponse, err error) {
     if request == nil {
         request = NewModifyInstancesAttributeRequest()
@@ -1235,6 +1288,33 @@ func (c *Client) ModifyInstancesRenewFlag(request *ModifyInstancesRenewFlagReque
         request = NewModifyInstancesRenewFlagRequest()
     }
     response = NewModifyInstancesRenewFlagResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewModifyInstancesVpcAttributeRequest() (request *ModifyInstancesVpcAttributeRequest) {
+    request = &ModifyInstancesVpcAttributeRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("cvm", APIVersion, "ModifyInstancesVpcAttribute")
+    return
+}
+
+func NewModifyInstancesVpcAttributeResponse() (response *ModifyInstancesVpcAttributeResponse) {
+    response = &ModifyInstancesVpcAttributeResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口(ModifyInstancesVpcAttribute)用于修改实例vpc属性，如私有网络ip。
+// * 此操作默认会关闭实例，完成后再启动。
+// * 当指定私有网络ID和子网ID（子网必须在实例所在的可用区）与指定实例所在私有网络不一致时，会将实例迁移至指定的私有网络的子网下。执行此操作前请确保指定的实例上没有绑定[弹性网卡](https://cloud.tencent.com/document/product/576)和[负载均衡](https://cloud.tencent.com/document/product/214)。
+func (c *Client) ModifyInstancesVpcAttribute(request *ModifyInstancesVpcAttributeRequest) (response *ModifyInstancesVpcAttributeResponse, err error) {
+    if request == nil {
+        request = NewModifyInstancesVpcAttributeRequest()
+    }
+    response = NewModifyInstancesVpcAttributeResponse()
     err = c.Send(request, response)
     return
 }
@@ -1491,7 +1571,8 @@ func NewResizeInstanceDisksResponse() (response *ResizeInstanceDisksResponse) {
 
 // 本接口 (ResizeInstanceDisks) 用于扩容实例的数据盘。
 // 
-// * 目前只支持扩容随实例购买的数据盘，且[数据盘类型](/document/api/213/9452#block_device)为：`CLOUD_BASIC`、`CLOUD_PREMIUM`、`CLOUD_SSD`。* 目前不支持[CDH](https://cloud.tencent.com/document/product/416)实例使用该接口扩容数据盘。
+// * 目前只支持扩容非弹性数据盘（[`DescribeDisks`](https://cloud.tencent.com/document/api/362/16315)接口返回值中的`Portable`为`false`表示非弹性），且[数据盘类型](/document/api/213/9452#block_device)为：`CLOUD_BASIC`、`CLOUD_PREMIUM`、`CLOUD_SSD`。
+// * 目前不支持[CDH](https://cloud.tencent.com/document/product/416)实例使用该接口扩容数据盘。
 // * 对于包年包月实例，使用该接口会涉及扣费，请确保账户余额充足。可通过[`DescribeAccountBalance`](https://cloud.tencent.com/document/product/378/4397)接口查询账户余额。
 // * 目前只支持扩容一块数据盘。
 func (c *Client) ResizeInstanceDisks(request *ResizeInstanceDisksRequest) (response *ResizeInstanceDisksResponse, err error) {

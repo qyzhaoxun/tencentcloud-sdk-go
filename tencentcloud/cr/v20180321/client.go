@@ -26,20 +26,72 @@ type Client struct {
     common.Client
 }
 
+// Deprecated
 func NewClientWithSecretId(secretId, secretKey, region string) (client *Client, err error) {
+    cpf := profile.NewClientProfile()
     client = &Client{}
-    client.Init(region).WithSecretId(secretId, secretKey)
+    client.Init(region).WithSecretId(secretId, secretKey).WithProfile(cpf)
     return
 }
 
 func NewClient(credential *common.Credential, region string, clientProfile *profile.ClientProfile) (client *Client, err error) {
     client = &Client{}
     client.Init(region).
-        WithSecretId(credential.SecretId, credential.SecretKey).
+        WithCredential(credential).
         WithProfile(clientProfile)
     return
 }
 
+
+func NewApplyBlackListRequest() (request *ApplyBlackListRequest) {
+    request = &ApplyBlackListRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("cr", APIVersion, "ApplyBlackList")
+    return
+}
+
+func NewApplyBlackListResponse() (response *ApplyBlackListResponse) {
+    response = &ApplyBlackListResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 提交黑名单申请。
+func (c *Client) ApplyBlackList(request *ApplyBlackListRequest) (response *ApplyBlackListResponse, err error) {
+    if request == nil {
+        request = NewApplyBlackListRequest()
+    }
+    response = NewApplyBlackListResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDescribeRecordsRequest() (request *DescribeRecordsRequest) {
+    request = &DescribeRecordsRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("cr", APIVersion, "DescribeRecords")
+    return
+}
+
+func NewDescribeRecordsResponse() (response *DescribeRecordsResponse) {
+    response = &DescribeRecordsResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 查询录音，返回录音列表。
+func (c *Client) DescribeRecords(request *DescribeRecordsRequest) (response *DescribeRecordsResponse, err error) {
+    if request == nil {
+        request = NewDescribeRecordsRequest()
+    }
+    response = NewDescribeRecordsResponse()
+    err = c.Send(request, response)
+    return
+}
 
 func NewDescribeTaskStatusRequest() (request *DescribeTaskStatusRequest) {
     request = &DescribeTaskStatusRequest{
@@ -87,6 +139,31 @@ func (c *Client) DownloadReport(request *DownloadReportRequest) (response *Downl
         request = NewDownloadReportRequest()
     }
     response = NewDownloadReportResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewUploadDataFileRequest() (request *UploadDataFileRequest) {
+    request = &UploadDataFileRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("cr", APIVersion, "UploadDataFile")
+    return
+}
+
+func NewUploadDataFileResponse() (response *UploadDataFileResponse) {
+    response = &UploadDataFileResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 客户通过调用该接口上传需催收文档或还款文档，接口返回数据任务ID，支持xlsx、xls、csv、zip格式，文档大小不超过50MB。
+func (c *Client) UploadDataFile(request *UploadDataFileRequest) (response *UploadDataFileResponse, err error) {
+    if request == nil {
+        request = NewUploadDataFileRequest()
+    }
+    response = NewUploadDataFileResponse()
     err = c.Send(request, response)
     return
 }

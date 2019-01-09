@@ -2,6 +2,7 @@ package common
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	// "log"
 	log "github.com/cihub/seelog"
@@ -60,11 +61,18 @@ func ParseFromHttpResponse(hr *http.Response, response Response) (err error) {
 	if err != nil {
 		return
 	}
+	if hr.StatusCode != 200 {
+		log.Errorf("[ERROR] Request fail with status: %s, with body: %s", hr.Status, body)    
+		return fmt.Errorf("Request fail with status: %s, with body: %s", hr.Status, body)
+	}
 	log.Infof("[DEBUG] Response Body=%s", body)
 	err = response.ParseErrorFromHTTPResponse(body)
 	if err != nil {
 		return
 	}
 	err = json.Unmarshal(body, &response)
+	if err != nil {
+		log.Errorf("[ERROR] Unexpected Error occurs when parsing API response\n%s\n", string(body[:]))
+	}
 	return
 }

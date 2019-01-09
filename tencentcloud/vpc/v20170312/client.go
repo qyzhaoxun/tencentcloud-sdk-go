@@ -26,16 +26,18 @@ type Client struct {
     common.Client
 }
 
+// Deprecated
 func NewClientWithSecretId(secretId, secretKey, region string) (client *Client, err error) {
+    cpf := profile.NewClientProfile()
     client = &Client{}
-    client.Init(region).WithSecretId(secretId, secretKey)
+    client.Init(region).WithSecretId(secretId, secretKey).WithProfile(cpf)
     return
 }
 
 func NewClient(credential *common.Credential, region string, clientProfile *profile.ClientProfile) (client *Client, err error) {
     client = &Client{}
     client.Init(region).
-        WithSecretId(credential.SecretId, credential.SecretKey).
+        WithCredential(credential).
         WithProfile(clientProfile)
     return
 }
@@ -135,7 +137,7 @@ func NewAssignPrivateIpAddressesResponse() (response *AssignPrivateIpAddressesRe
 }
 
 // 本接口（AssignPrivateIpAddresses）用于弹性网卡申请内网 IP。
-// * 一个弹性网卡支持绑定的IP地址是有限制的，更多资源限制信息详见<a href="https://cloud.tencent.com/document/product/215/6513">弹性网卡使用限制</a>。
+// * 一个弹性网卡支持绑定的IP地址是有限制的，更多资源限制信息详见<a href="/document/product/576/18527">弹性网卡使用限制</a>。
 // * 可以指定内网IP地址申请，内网IP地址类型不能为主IP，主IP已存在，不能修改，内网IP必须要弹性网卡所在子网内，而且不能被占用。
 // * 在弹性网卡上申请一个到多个辅助内网IP，接口会在弹性网卡所在子网网段内返回指定数量的辅助内网IP。
 func (c *Client) AssignPrivateIpAddresses(request *AssignPrivateIpAddressesRequest) (response *AssignPrivateIpAddressesResponse, err error) {
@@ -163,9 +165,10 @@ func NewAssociateAddressResponse() (response *AssociateAddressResponse) {
 }
 
 // 本接口 (AssociateAddress) 用于将[弹性公网IP](https://cloud.tencent.com/document/product/213/1941)（简称 EIP）绑定到实例或弹性网卡的指定内网 IP 上。
-// * 将 EIP 绑定到实例上，其本质是将 EIP 绑定到实例上主网卡的主内网 IP 上。
+// * 将 EIP 绑定到实例（CVM）上，其本质是将 EIP 绑定到实例上主网卡的主内网 IP 上。
 // * 将 EIP 绑定到主网卡的主内网IP上，绑定过程会把其上绑定的普通公网 IP 自动解绑并释放。
-// * 如果指定网卡的内网 IP 已经绑定了 EIP，则必须先解绑该 EIP，才能再绑定新的。
+// * 将 EIP 绑定到指定网卡的内网 IP上（非主网卡的主内网IP），则必须先解绑该 EIP，才能再绑定新的。
+// * 将 EIP 绑定到NAT网关，请使用接口[EipBindNatGateway](https://cloud.tencent.com/document/product/215/4093)
 // * EIP 如果欠费或被封堵，则不能被绑定。
 // * 只有状态为 UNBIND 的 EIP 才能够被绑定。
 func (c *Client) AssociateAddress(request *AssociateAddressRequest) (response *AssociateAddressResponse, err error) {
@@ -468,6 +471,31 @@ func (c *Client) CreateDirectConnectGatewayCcnRoutes(request *CreateDirectConnec
     return
 }
 
+func NewCreateHaVipRequest() (request *CreateHaVipRequest) {
+    request = &CreateHaVipRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "CreateHaVip")
+    return
+}
+
+func NewCreateHaVipResponse() (response *CreateHaVipResponse) {
+    response = &CreateHaVipResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（CreateHaVip）用于创建高可用虚拟IP（HAVIP）
+func (c *Client) CreateHaVip(request *CreateHaVipRequest) (response *CreateHaVipResponse, err error) {
+    if request == nil {
+        request = NewCreateHaVipRequest()
+    }
+    response = NewCreateHaVipResponse()
+    err = c.Send(request, response)
+    return
+}
+
 func NewCreateNetworkInterfaceRequest() (request *CreateNetworkInterfaceRequest) {
     request = &CreateNetworkInterfaceRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -486,6 +514,7 @@ func NewCreateNetworkInterfaceResponse() (response *CreateNetworkInterfaceRespon
 // 本接口（CreateNetworkInterface）用于创建弹性网卡。
 // * 创建弹性网卡时可以指定内网IP，并且可以指定一个主IP，指定的内网IP必须在弹性网卡所在子网内，而且不能被占用。
 // * 创建弹性网卡时可以指定需要申请的内网IP数量，系统会随机生成内网IP地址。
+// * 一个弹性网卡支持绑定的IP地址是有限制的，更多资源限制信息详见<a href="/document/product/576/18527">弹性网卡使用限制</a>。
 // * 创建弹性网卡同时可以绑定已有安全组。
 func (c *Client) CreateNetworkInterface(request *CreateNetworkInterfaceRequest) (response *CreateNetworkInterfaceResponse, err error) {
     if request == nil {
@@ -685,6 +714,36 @@ func (c *Client) CreateSubnet(request *CreateSubnetRequest) (response *CreateSub
         request = NewCreateSubnetRequest()
     }
     response = NewCreateSubnetResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewCreateSubnetsRequest() (request *CreateSubnetsRequest) {
+    request = &CreateSubnetsRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "CreateSubnets")
+    return
+}
+
+func NewCreateSubnetsResponse() (response *CreateSubnetsResponse) {
+    response = &CreateSubnetsResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口(CreateSubnets)用于批量创建子网。
+// * 创建子网前必须创建好 VPC。
+// * 子网创建成功后，子网网段不能修改。子网网段必须在VPC网段内，可以和VPC网段相同（VPC有且只有一个子网时），建议子网网段在VPC网段内，预留网段给其他子网使用。
+// * 你可以创建的最小网段子网掩码为28（有16个IP地址），最大网段子网掩码为16（65,536个IP地址）。
+// * 同一个VPC内，多个子网的网段不能重叠。
+// * 子网创建后会自动关联到默认路由表。
+func (c *Client) CreateSubnets(request *CreateSubnetsRequest) (response *CreateSubnetsResponse, err error) {
+    if request == nil {
+        request = NewCreateSubnetsRequest()
+    }
+    response = NewCreateSubnetsResponse()
     err = c.Send(request, response)
     return
 }
@@ -893,6 +952,34 @@ func (c *Client) DeleteCustomerGateway(request *DeleteCustomerGatewayRequest) (r
     return
 }
 
+func NewDeleteDirectConnectGatewayRequest() (request *DeleteDirectConnectGatewayRequest) {
+    request = &DeleteDirectConnectGatewayRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DeleteDirectConnectGateway")
+    return
+}
+
+func NewDeleteDirectConnectGatewayResponse() (response *DeleteDirectConnectGatewayResponse) {
+    response = &DeleteDirectConnectGatewayResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DeleteDirectConnectGateway）用于删除专线网关。
+// <li>如果是 NAT 网关，删除专线网关后，NAT 规则以及 ACL 策略都被清理了。</li>
+// <li>删除专线网关后，系统会删除路由表中跟该专线网关相关的路由策略。</li>
+// 本接口是异步完成，如需查询异步任务执行结果，请使用本接口返回的`RequestId`轮询`QueryTask`接口
+func (c *Client) DeleteDirectConnectGateway(request *DeleteDirectConnectGatewayRequest) (response *DeleteDirectConnectGatewayResponse, err error) {
+    if request == nil {
+        request = NewDeleteDirectConnectGatewayRequest()
+    }
+    response = NewDeleteDirectConnectGatewayResponse()
+    err = c.Send(request, response)
+    return
+}
+
 func NewDeleteDirectConnectGatewayCcnRoutesRequest() (request *DeleteDirectConnectGatewayCcnRoutesRequest) {
     request = &DeleteDirectConnectGatewayCcnRoutesRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -918,6 +1005,32 @@ func (c *Client) DeleteDirectConnectGatewayCcnRoutes(request *DeleteDirectConnec
     return
 }
 
+func NewDeleteHaVipRequest() (request *DeleteHaVipRequest) {
+    request = &DeleteHaVipRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DeleteHaVip")
+    return
+}
+
+func NewDeleteHaVipResponse() (response *DeleteHaVipResponse) {
+    response = &DeleteHaVipResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DeleteHaVip）用于删除高可用虚拟IP（HAVIP）<br />
+// 本接口是异步完成，如需查询异步任务执行结果，请使用本接口返回的`RequestId`轮询`QueryTask`接口
+func (c *Client) DeleteHaVip(request *DeleteHaVipRequest) (response *DeleteHaVipResponse, err error) {
+    if request == nil {
+        request = NewDeleteHaVipRequest()
+    }
+    response = NewDeleteHaVipResponse()
+    err = c.Send(request, response)
+    return
+}
+
 func NewDeleteNetworkInterfaceRequest() (request *DeleteNetworkInterfaceRequest) {
     request = &DeleteNetworkInterfaceRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -933,7 +1046,7 @@ func NewDeleteNetworkInterfaceResponse() (response *DeleteNetworkInterfaceRespon
     return
 }
 
-// 本接口（DeleteNetworkInterface）用于创建弹性网卡。
+// 本接口（DeleteNetworkInterface）用于删除弹性网卡。
 // * 弹性网卡上绑定了云主机时，不能被删除。
 // * 删除指定弹性网卡，弹性网卡必须先和子机解绑才能删除。删除之后弹性网卡上所有内网IP都将被退还。
 func (c *Client) DeleteNetworkInterface(request *DeleteNetworkInterfaceRequest) (response *DeleteNetworkInterfaceResponse, err error) {
@@ -1578,6 +1691,56 @@ func (c *Client) DescribeDirectConnectGatewayCcnRoutes(request *DescribeDirectCo
     return
 }
 
+func NewDescribeDirectConnectGatewaysRequest() (request *DescribeDirectConnectGatewaysRequest) {
+    request = &DescribeDirectConnectGatewaysRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DescribeDirectConnectGateways")
+    return
+}
+
+func NewDescribeDirectConnectGatewaysResponse() (response *DescribeDirectConnectGatewaysResponse) {
+    response = &DescribeDirectConnectGatewaysResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DescribeDirectConnectGateways）用于查询专线网关。
+func (c *Client) DescribeDirectConnectGateways(request *DescribeDirectConnectGatewaysRequest) (response *DescribeDirectConnectGatewaysResponse, err error) {
+    if request == nil {
+        request = NewDescribeDirectConnectGatewaysRequest()
+    }
+    response = NewDescribeDirectConnectGatewaysResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDescribeHaVipsRequest() (request *DescribeHaVipsRequest) {
+    request = &DescribeHaVipsRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DescribeHaVips")
+    return
+}
+
+func NewDescribeHaVipsResponse() (response *DescribeHaVipsResponse) {
+    response = &DescribeHaVipsResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DescribeHaVips）用于查询高可用虚拟IP（HAVIP）列表。
+func (c *Client) DescribeHaVips(request *DescribeHaVipsRequest) (response *DescribeHaVipsResponse, err error) {
+    if request == nil {
+        request = NewDescribeHaVipsRequest()
+    }
+    response = NewDescribeHaVipsResponse()
+    err = c.Send(request, response)
+    return
+}
+
 func NewDescribeNetworkInterfacesRequest() (request *DescribeNetworkInterfacesRequest) {
     request = &DescribeNetworkInterfacesRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -2020,6 +2183,8 @@ func NewDisassociateAddressResponse() (response *DisassociateAddressResponse) {
 }
 
 // 本接口 (DisassociateAddress) 用于解绑[弹性公网IP](https://cloud.tencent.com/document/product/213/1941)（简称 EIP）。
+// * 支持CVM实例，弹性网卡上的EIP解绑
+// * 不支持NAT上的EIP解绑。NAT上的EIP解绑请参考[EipUnBindNatGateway](https://cloud.tencent.com/document/product/215/4092)
 // * 只有状态为 BIND 和 BIND_ENI 的 EIP 才能进行解绑定操作。
 // * EIP 如果被封堵，则不能进行解绑定操作。
 func (c *Client) DisassociateAddress(request *DisassociateAddressRequest) (response *DisassociateAddressResponse, err error) {
@@ -2104,6 +2269,58 @@ func (c *Client) EnableRoutes(request *EnableRoutesRequest) (response *EnableRou
         request = NewEnableRoutesRequest()
     }
     response = NewEnableRoutesResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewHaVipAssociateAddressIpRequest() (request *HaVipAssociateAddressIpRequest) {
+    request = &HaVipAssociateAddressIpRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "HaVipAssociateAddressIp")
+    return
+}
+
+func NewHaVipAssociateAddressIpResponse() (response *HaVipAssociateAddressIpResponse) {
+    response = &HaVipAssociateAddressIpResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（HaVipAssociateAddressIp）用于高可用虚拟IP（HAVIP）绑定弹性公网IP（EIP）<br />
+// 本接口是异步完成，如需查询异步任务执行结果，请使用本接口返回的`RequestId`轮询`QueryTask`接口
+func (c *Client) HaVipAssociateAddressIp(request *HaVipAssociateAddressIpRequest) (response *HaVipAssociateAddressIpResponse, err error) {
+    if request == nil {
+        request = NewHaVipAssociateAddressIpRequest()
+    }
+    response = NewHaVipAssociateAddressIpResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewHaVipDisassociateAddressIpRequest() (request *HaVipDisassociateAddressIpRequest) {
+    request = &HaVipDisassociateAddressIpRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "HaVipDisassociateAddressIp")
+    return
+}
+
+func NewHaVipDisassociateAddressIpResponse() (response *HaVipDisassociateAddressIpResponse) {
+    response = &HaVipDisassociateAddressIpResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（HaVipDisassociateAddressIp）用于将高可用虚拟IP（HAVIP）已绑定的弹性公网IP（EIP）解除绑定<br />
+// 本接口是异步完成，如需查询异步任务执行结果，请使用本接口返回的`RequestId`轮询`QueryTask`接口
+func (c *Client) HaVipDisassociateAddressIp(request *HaVipDisassociateAddressIpRequest) (response *HaVipDisassociateAddressIpResponse, err error) {
+    if request == nil {
+        request = NewHaVipDisassociateAddressIpRequest()
+    }
+    response = NewHaVipDisassociateAddressIpResponse()
     err = c.Send(request, response)
     return
 }
@@ -2407,6 +2624,56 @@ func (c *Client) ModifyCustomerGatewayAttribute(request *ModifyCustomerGatewayAt
         request = NewModifyCustomerGatewayAttributeRequest()
     }
     response = NewModifyCustomerGatewayAttributeResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewModifyDirectConnectGatewayAttributeRequest() (request *ModifyDirectConnectGatewayAttributeRequest) {
+    request = &ModifyDirectConnectGatewayAttributeRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "ModifyDirectConnectGatewayAttribute")
+    return
+}
+
+func NewModifyDirectConnectGatewayAttributeResponse() (response *ModifyDirectConnectGatewayAttributeResponse) {
+    response = &ModifyDirectConnectGatewayAttributeResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（ModifyDirectConnectGatewayAttribute）用于修改专线网关属性
+func (c *Client) ModifyDirectConnectGatewayAttribute(request *ModifyDirectConnectGatewayAttributeRequest) (response *ModifyDirectConnectGatewayAttributeResponse, err error) {
+    if request == nil {
+        request = NewModifyDirectConnectGatewayAttributeRequest()
+    }
+    response = NewModifyDirectConnectGatewayAttributeResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewModifyHaVipAttributeRequest() (request *ModifyHaVipAttributeRequest) {
+    request = &ModifyHaVipAttributeRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "ModifyHaVipAttribute")
+    return
+}
+
+func NewModifyHaVipAttributeResponse() (response *ModifyHaVipAttributeResponse) {
+    response = &ModifyHaVipAttributeResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（ModifyHaVipAttribute）用于修改高可用虚拟IP（HAVIP）属性
+func (c *Client) ModifyHaVipAttribute(request *ModifyHaVipAttributeRequest) (response *ModifyHaVipAttributeResponse, err error) {
+    if request == nil {
+        request = NewModifyHaVipAttributeRequest()
+    }
+    response = NewModifyHaVipAttributeResponse()
     err = c.Send(request, response)
     return
 }
