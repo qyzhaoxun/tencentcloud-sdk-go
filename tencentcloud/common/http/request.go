@@ -149,6 +149,10 @@ func getRootDomain() string {
 	if env == "TENCENT_CLOUD_VPC" {
 		return InternalRootDomain
 	}
+	env1 := os.Getenv("TENCENT_CLOUD_APIV3_ROOT_DOMAIN")
+	if len(env1) > 0 {
+		return env1
+	}
 	return RootDomain
 }
 
