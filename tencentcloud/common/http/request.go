@@ -153,7 +153,6 @@ func getRootDomain() string {
 	if len(env1) > 0 {
 		return env1
 	}
-
 	return RootDomain
 }
 
