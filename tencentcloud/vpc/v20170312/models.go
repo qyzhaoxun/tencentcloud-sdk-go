@@ -213,6 +213,9 @@ type AllocateAddressesResponse struct {
 		// 申请到的 EIP 的唯一 ID 列表。
 		AddressSet []*string `json:"AddressSet" name:"AddressSet" list`
 
+		// 异步任务TaskId。可以使用[DescribeTaskResult](https://cloud.tencent.com/document/api/215/36271)接口查询任务状态。
+		TaskId *string `json:"TaskId,omitempty" name:"TaskId"`
+
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId *string `json:"RequestId" name:"RequestId"`
 	} `json:"Response"`
@@ -298,6 +301,9 @@ func (r *AssociateAddressRequest) FromJsonString(s string) error {
 type AssociateAddressResponse struct {
 	*tchttp.BaseResponse
 	Response *struct {
+
+		// 异步任务TaskId。可以使用[DescribeTaskResult](https://cloud.tencent.com/document/api/215/36271)接口查询任务状态。
+		TaskId *string `json:"TaskId,omitempty" name:"TaskId"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId *string `json:"RequestId" name:"RequestId"`
@@ -3859,6 +3865,8 @@ func (r *DisassociateAddressRequest) FromJsonString(s string) error {
 type DisassociateAddressResponse struct {
 	*tchttp.BaseResponse
 	Response *struct {
+		// 异步任务TaskId。可以使用[DescribeTaskResult](https://cloud.tencent.com/document/api/215/36271)接口查询任务状态。
+		TaskId *string `json:"TaskId,omitempty" name:"TaskId"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId *string `json:"RequestId" name:"RequestId"`
@@ -5369,6 +5377,8 @@ func (r *ReleaseAddressesRequest) FromJsonString(s string) error {
 type ReleaseAddressesResponse struct {
 	*tchttp.BaseResponse
 	Response *struct {
+		// 异步任务TaskId。可以使用[DescribeTaskResult](https://cloud.tencent.com/document/api/215/36271)接口查询任务状态。
+		TaskId *string `json:"TaskId,omitempty" name:"TaskId"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId *string `json:"RequestId" name:"RequestId"`
