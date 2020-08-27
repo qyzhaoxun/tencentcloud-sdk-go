@@ -4,6 +4,8 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"os"
+
 	// "log"
 	"net/http"
 	"net/http/httputil"
@@ -68,6 +70,10 @@ func (c *Client) sendWithSignatureV1(request tchttp.Request, response tchttp.Res
 	}
 	if request.GetHttpMethod() == "POST" {
 		httpRequest.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		uin := os.Getenv("TENCENT_CLOUD_UIN")
+		if len(uin) > 0 {
+			httpRequest.Header.Set("X-Qcloud-User-Id", uin)
+		}
 	}
 	if c.debug {
 		outbytes, err := httputil.DumpRequest(httpRequest, true)
@@ -94,6 +100,10 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 		"X-TC-Timestamp":     request.GetParams()["Timestamp"],
 		"X-TC-RequestClient": request.GetParams()["RequestClient"],
 		"X-TC-Language":      c.profile.Language,
+	}
+	uin := os.Getenv("TENCENT_CLOUD_UIN")
+	if len(uin) > 0 {
+		headers["X-Qcloud-User-Id"] = uin
 	}
 	if c.region != "" {
 		headers["X-TC-Region"] = c.region
