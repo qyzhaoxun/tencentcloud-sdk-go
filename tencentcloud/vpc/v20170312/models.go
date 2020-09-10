@@ -1165,6 +1165,7 @@ func (r *CreateAddressTemplateGroupResponse) FromJsonString(s string) error {
 }
 
 type CreateAddressTemplateRequest struct {
+
 	*tchttp.BaseRequest
 
 	// IP地址模版名称
@@ -2099,6 +2100,7 @@ func (r *CreateServiceTemplateGroupResponse) FromJsonString(s string) error {
 }
 
 type CreateServiceTemplateRequest struct {
+
 	*tchttp.BaseRequest
 
 	// 协议端口模板名称
