@@ -9823,7 +9823,7 @@ type DescribeVpcTaskResultResponse struct {
 		Status 		*string 	`json:"Status" name:"Status"`
 
 		// 异步任务执行输出。
-		Output 		*string 	`json:"Output" name:"Output"`
+		Output 		*interface{} 	`json:"Output" name:"Output"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId 	*string 	`json:"RequestId" name:"RequestId"`
