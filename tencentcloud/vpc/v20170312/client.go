@@ -3368,3 +3368,81 @@ func (c *Client) QueryTask(request *QueryTaskRequest) (response *QueryTaskRespon
     err = c.Send(request, response)
     return
 }
+
+func NewCreateNetworkInterfaceExRequest() (request *CreateNetworkInterfaceExRequest) {
+    request = &CreateNetworkInterfaceExRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "CreateNetworkInterfaceEx")
+    return
+}
+
+func NewCreateNetworkInterfaceExResponse() (response *CreateNetworkInterfaceExResponse) {
+    response = &CreateNetworkInterfaceExResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（CreateNetworkInterfaceEx）用于创建跨租户弹性网卡。
+// * ReservedAddress=1时，从保留网段（169.254.128/17）分配一个未使用的IP。
+// * 创建弹性网卡时可以指定内网IP（ReservedAddress=0且指定了用户SubnetId时，才可使用），并且可以指定一个主IP，指定的内网IP必须在弹性网卡所在子网内，而且不能被占用。
+// * 不允许网卡VPC和云服务器在同一个VPC内，调用接口创建跨租户的弹性网卡；
+func (c *Client) CreateNetworkInterfaceEx(request *CreateNetworkInterfaceExRequest) (response *CreateNetworkInterfaceExResponse, err error) {
+    if request == nil {
+        request = NewCreateNetworkInterfaceExRequest()
+    }
+    response = NewCreateNetworkInterfaceExResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDeleteNetworkInterfaceExRequest() (request *DeleteNetworkInterfaceExRequest) {
+    request = &DeleteNetworkInterfaceExRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DeleteNetworkInterfaceEx")
+    return
+}
+
+func NewDeleteNetworkInterfaceExResponse() (response *DeleteNetworkInterfaceExResponse) {
+    response = &DeleteNetworkInterfaceExResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DeleteNetworkInterfaceEx）用于删除跨租户弹性网卡。
+func (c *Client) DeleteNetworkInterfaceEx(request *DeleteNetworkInterfaceExRequest) (response *DeleteNetworkInterfaceExResponse, err error) {
+    if request == nil {
+        request = NewDeleteNetworkInterfaceExRequest()
+    }
+    response = NewDeleteNetworkInterfaceExResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDescribeVpcTaskResultRequest() (request *DescribeVpcTaskResultRequest) {
+    request = &DescribeVpcTaskResultRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DescribeVpcTaskResult")
+    return
+}
+
+func NewDescribeVpcTaskResultResponse() (response *DescribeVpcTaskResultResponse) {
+    response = &DescribeVpcTaskResultResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DescribeVpcTaskResult）用于查询VPC任务执行结果。
+func (c *Client) DescribeVpcTaskResult(request *DescribeVpcTaskResultRequest) (response *DescribeVpcTaskResultResponse, err error) {
+    if request == nil {
+        request = NewDescribeVpcTaskResultRequest()
+    }
+    response = NewDescribeVpcTaskResultResponse()
+    err = c.Send(request, response)
+    return
+}
