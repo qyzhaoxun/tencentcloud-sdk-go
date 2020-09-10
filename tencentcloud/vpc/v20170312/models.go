@@ -1583,7 +1583,9 @@ func (r *CreateHaVipResponse) FromJsonString(s string) error {
     return json.Unmarshal([]byte(s), &r)
 }
 
+
 type CreateIp6TranslatorsRequest struct {
+
 	*tchttp.BaseRequest
 
 	// 转换实例名称
@@ -2943,6 +2945,46 @@ func (r *DeleteNetworkInterfaceResponse) ToJsonString() string {
 
 func (r *DeleteNetworkInterfaceResponse) FromJsonString(s string) error {
     return json.Unmarshal([]byte(s), &r)
+}
+
+type DeleteNetworkInterfaceExRequest struct {
+	*tchttp.BaseRequest
+
+	// VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
+	VpcId 	*string 	`json:"VpcId" name:"VpcId"`
+
+	// 弹性网卡实例ID，例如：eni-m6dyj72l。
+	NetworkInterfaceId *string `json:"NetworkInterfaceId" name:"NetworkInterfaceId"`
+
+	// 是否跨租户创建网卡。默认为true。
+	IsCrossTenant 	*bool 		`json:"IsCrossTenant" name:"IsCrossTenant"`
+}
+
+func (r *DeleteNetworkInterfaceExRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DeleteNetworkInterfaceExRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DeleteNetworkInterfaceExResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId *string `json:"RequestId" name:"RequestId"`
+	} `json:"Response"`
+}
+
+func (r *DeleteNetworkInterfaceExResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DeleteNetworkInterfaceExResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
 }
 
 type DeleteRouteTableRequest struct {
@@ -9681,4 +9723,45 @@ type VpnGatewayQuota struct {
 
 	// 配额英文名称
 	Name *string `json:"Name,omitempty" name:"Name"`
+}
+
+type DescribeVpcTaskResultRequest struct {
+	*tchttp.BaseRequest
+
+	// 异步任务请求返回的RequestId。
+	TaskId 		*string 	`json:"TaskId" name:"TaskId"`
+}
+
+func (r *DescribeVpcTaskResultRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DescribeVpcTaskResultRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DescribeVpcTaskResultResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 异步任务执行结果。结果：SUCCESS,FAILED,RUNNING。3者其中之一。其中SUCCESS表示任务执行成功，FAILED表示任务执行失败，RUNNING表示任务执行中。
+		Status 		*string 	`json:"Status" name:"Status"`
+
+		// 异步任务执行输出。
+		Output 		*string 	`json:"Output" name:"Output"`
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId 	*string 	`json:"RequestId" name:"RequestId"`
+
+	} `json:"Response"`
+}
+
+func (r *DescribeVpcTaskResultResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DescribeVpcTaskResultResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
 }
