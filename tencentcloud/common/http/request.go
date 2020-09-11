@@ -179,7 +179,6 @@ func ConstructParams(req Request) (err error) {
 
 	//log.Infof("[DEBUG] params=%s", req.GetParams())
 	log.Infof("[DEBUG] params=%s", req.GetParams())
-
 	return
 }
 

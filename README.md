@@ -129,8 +129,6 @@ func main() {
 ```
 
 更多示例参见 [examples](https://github.com/qyzhaoxun/tencentcloud-sdk-go/tree/master/examples) 目录。对于复杂接口的 Request 初始化例子，可以参考 examples/cvm/v20170312/run_instances.go 。对于使用json字符串初始化 Request 的例子，可以参考 examples/cvm/v20170312/describe_instances.go 。
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 # 相关配置
 
@@ -160,7 +158,6 @@ import "crypto/tls"
 ```
 
 再次强调，除非你知道自己在做什么，并明白由此带来的风险，否则不要尝试关闭服务器证书校验。
-=======
 
 # 支持产品列表
 
