@@ -234,8 +234,8 @@ func (c *Client) GetRegion() string {
 func (c *Client) Init(region string) *Client {
 	c.httpClient = &http.Client{}
 	c.region = region
-	c.signMethod = "HmacSHA256"
-	c.debug = false
+	c.signMethod = "TC3-HMAC-SHA256"
+	c.debug = true
 	//log.SetFlags(log.LstdFlags | log.Lshortfile)
 	return c
 }
