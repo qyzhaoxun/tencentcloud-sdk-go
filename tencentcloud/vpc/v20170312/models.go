@@ -9835,3 +9835,4 @@ func (r *DescribeVpcTaskResultResponse) ToJsonString() string {
 func (r *DescribeVpcTaskResultResponse) FromJsonString(s string) error {
 	return json.Unmarshal([]byte(s), &r)
 }
+
