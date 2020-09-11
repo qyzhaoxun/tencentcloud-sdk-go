@@ -176,6 +176,7 @@ func ConstructParams(req Request) (err error) {
 	value := reflect.ValueOf(req).Elem()
 	err = flatStructure(value, req, "")
 	//log.Infof("[DEBUG] params=%s", req.GetParams())
+	log.Infof("[DEBUG] params=%s", req.GetParams())
 	return
 }
 
