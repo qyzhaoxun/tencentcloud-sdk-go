@@ -9687,37 +9687,37 @@ type CreateNetworkInterfaceExRequest struct {
 	*tchttp.BaseRequest
 
 	// VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
-	VpcId *string `json:"VpcId" name:"VpcId"`
+	VpcId *string `json:"VpcId,omitempty" name:"VpcId"`
 
 	// 弹性网卡名称，最大长度不能超过60个字节。
-	NetworkInterfaceName *string `json:"NetworkInterfaceName" name:"NetworkInterfaceName"`
+	NetworkInterfaceName *string `json:"NetworkInterfaceName,omitempty" name:"NetworkInterfaceName"`
 
 	// 云服务实例ID。
-	InstanceId 	*string `json:"InstanceId" name:"InstanceId"`
+	InstanceId 	*string `json:"InstanceId,omitempty" name:"InstanceId"`
 
 	// 弹性网卡所在的子网实例ID，例如：subnet-0ap8nwca。当ReservedAddress=false时，需要指定SubnetId
-	SubnetId *string `json:"SubnetId" name:"SubnetId"`
+	SubnetId *string `json:"SubnetId,omitempty" name:"SubnetId"`
 
 	// 弹性网卡描述，可任意命名，但不得超过60个字符。
-	NetworkInterfaceDescription *string `json:"NetworkInterfaceDescription" name:"NetworkInterfaceDescription"`
+	NetworkInterfaceDescription *string `json:"NetworkInterfaceDescription,omitempty" name:"NetworkInterfaceDescription"`
 
 	// 是否保留网段分配IP，默认为true；当ReservedAddress=false时，需要指定SubnetId
-	IsReservedAddress 	*bool 	`json:"IsReservedAddress" name:"IsReservedAddress"`
+	IsReservedAddress 	*bool 	`json:"IsReservedAddress,omitempty" name:"IsReservedAddress"`
 
 	// 业务标识，默认为dockerMaster。
-	Business 	*string 	`json:"Business" name:"Business"`
+	Business 	*string 	`json:"Business,omitempty" name:"Business"`
 
 	// 业务所属项目，默认为Docker。
-	BusinessOwner 	*string 	`json:"BusinessOwner" name:"BusinessOwner"`
+	BusinessOwner 	*string 	`json:"BusinessOwner,omitempty" name:"BusinessOwner"`
 
 	// 是否跨租户创建网卡。默认为true。
-	IsCrossTenant 	*bool 		`json:"IsCrossTenant" name:"IsCrossTenant"`
+	IsCrossTenant 	*bool 		`json:"IsCrossTenant,omitempty" name:"IsCrossTenant"`
 
 	// 指定动态分配IP的个数。PrivateIpAddresses和SecondaryPrivateIpAddressCount一起，单次最多分配10个IP。。
-	SecondaryPrivateIpAddressCount *uint64 `json:"SecondaryPrivateIpAddressCount" name:"SecondaryPrivateIpAddressCount"`
+	SecondaryPrivateIpAddressCount *uint64 `json:"SecondaryPrivateIpAddressCount,omitempty" name:"SecondaryPrivateIpAddressCount"`
 
 	// 指定的内网IP信息，单次最多指定10个。
-	PrivateIpAddresses []*PrivateIpAddressSpecification `json:"PrivateIpAddresses" name:"PrivateIpAddresses" list`
+	PrivateIpAddresses []*PrivateIpAddressSpecification `json:"PrivateIpAddresses,omitempty" name:"PrivateIpAddresses" list`
 }
 
 func (r *CreateNetworkInterfaceExRequest) ToJsonString() string {
@@ -9738,7 +9738,7 @@ type CreateNetworkInterfaceExResponse struct {
 		// NetworkInterface *NetworkInterface `json:"NetworkInterface" name:"NetworkInterface"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
-		RequestId *string `json:"RequestId" name:"RequestId"`
+		RequestId *string `json:"RequestId,omitempty" name:"RequestId"`
 	} `json:"Response"`
 }
 
@@ -9755,13 +9755,13 @@ type DeleteNetworkInterfaceExRequest struct {
 	*tchttp.BaseRequest
 
 	// VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
-	VpcId 	*string 	`json:"VpcId" name:"VpcId"`
+	VpcId 	*string 	`json:"VpcId,omitempty" name:"VpcId"`
 
 	// 弹性网卡实例ID，例如：eni-m6dyj72l。
-	NetworkInterfaceId *string `json:"NetworkInterfaceId" name:"NetworkInterfaceId"`
+	NetworkInterfaceId *string `json:"NetworkInterfaceId,omitempty" name:"NetworkInterfaceId"`
 
 	// 是否跨租户创建网卡。默认为true。
-	IsCrossTenant 	*bool 		`json:"IsCrossTenant" name:"IsCrossTenant"`
+	IsCrossTenant 	*bool 		`json:"IsCrossTenant,omitempty" name:"IsCrossTenant"`
 }
 
 func (r *DeleteNetworkInterfaceExRequest) ToJsonString() string {
@@ -9778,7 +9778,7 @@ type DeleteNetworkInterfaceExResponse struct {
 	Response *struct {
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
-		RequestId *string `json:"RequestId" name:"RequestId"`
+		RequestId *string `json:"RequestId,omitempty" name:"RequestId"`
 	} `json:"Response"`
 }
 
@@ -9795,7 +9795,7 @@ type DescribeVpcTaskResultRequest struct {
 	*tchttp.BaseRequest
 
 	// 异步任务请求返回的RequestId。
-	TaskId 		*string 	`json:"TaskId" name:"TaskId"`
+	TaskId 		*string 	`json:"TaskId,omitempty" name:"TaskId"`
 }
 
 func (r *DescribeVpcTaskResultRequest) ToJsonString() string {
@@ -9812,13 +9812,13 @@ type DescribeVpcTaskResultResponse struct {
 	Response *struct {
 
 		// 异步任务执行结果。结果：SUCCESS,FAILED,RUNNING。3者其中之一。其中SUCCESS表示任务执行成功，FAILED表示任务执行失败，RUNNING表示任务执行中。
-		Status 		*string 	`json:"Status" name:"Status"`
+		Status 		*string 	`json:"Status,omitempty" name:"Status"`
 
 		// 异步任务执行输出。
-		Output 		*interface{} 	`json:"Output" name:"Output"`
+		Output 		*interface{} 	`json:"Output,omitempty" name:"Output"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
-		RequestId 	*string 	`json:"RequestId" name:"RequestId"`
+		RequestId 	*string 	`json:"RequestId,omitempty" name:"RequestId"`
 
 	} `json:"Response"`
 }
