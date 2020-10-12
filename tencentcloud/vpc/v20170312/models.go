@@ -9686,8 +9686,17 @@ type VpnGatewayQuota struct {
 type CreateNetworkInterfaceExRequest struct {
 	*tchttp.BaseRequest
 
-	// VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
+	// 对端VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
 	VpcId *string `json:"VpcId,omitempty" name:"VpcId"`
+
+	// 对端VPC对应APPID
+	VpcAppId *uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
+
+	// 对端VPC所对应的Uin
+	VpcUin *string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+
+	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
+	VpcSubAccountUin *string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
 
 	// 弹性网卡名称，最大长度不能超过60个字节。
 	NetworkInterfaceName *string `json:"NetworkInterfaceName,omitempty" name:"NetworkInterfaceName"`
@@ -9756,6 +9765,15 @@ type DeleteNetworkInterfaceExRequest struct {
 
 	// VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
 	VpcId 	*string 	`json:"VpcId,omitempty" name:"VpcId"`
+
+	// 对端VPC对应APPID
+	VpcAppId *uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
+
+	// 对端VPC所对应的Uin
+	VpcUin *string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+
+	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
+	VpcSubAccountUin *string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
 
 	// 弹性网卡实例ID，例如：eni-m6dyj72l。
 	NetworkInterfaceId *string `json:"NetworkInterfaceId,omitempty" name:"NetworkInterfaceId"`
