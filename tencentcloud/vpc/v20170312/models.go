@@ -9842,12 +9842,38 @@ type DescribeVpcTaskResultResponse struct {
 		Status 		*string 	`json:"Status,omitempty" name:"Status"`
 
 		// 异步任务执行输出。
-		Output 		*string 	`json:"Output,omitempty" name:"Output"`
+		Output 		*EniQueryInfo 	`json:"Output,omitempty" name:"Output"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId 	*string 	`json:"RequestId,omitempty" name:"RequestId"`
 
 	} `json:"Response"`
+}
+
+type EniQueryInfo struct {
+	// 错误码，正常情况下返回0
+	ErrorCode int    `json:"errorCode,omitempty"`
+
+	// 错误消息
+	ErrorMsg  string `json:"errorMsg,omitempty"`
+
+	// 网卡名称
+	IfnName   string `json:"ifnName,omitempty"`
+
+	// MAC地址
+	Mac       string `json:"mac,omitempty"`
+
+	// 主网卡IP
+	MainPip   string `json:"mainPip,omitempty"`
+
+	// 网卡自身IP
+	Pip       string `json:"pip,omitempty"`
+
+	// 网卡ID
+	EniId     string `json:"uniqEniId,omitempty"`
+
+	// 掩码
+	MaskInt   int    `json:"intMask,omitempty"`
 }
 
 func (r *DescribeVpcTaskResultResponse) ToJsonString() string {
