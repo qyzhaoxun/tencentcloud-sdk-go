@@ -9814,6 +9814,15 @@ type DescribeVpcTaskResultRequest struct {
 
 	// 异步任务请求返回的RequestId。
 	TaskId 		*string 	`json:"TaskId,omitempty" name:"TaskId"`
+
+	// 对端VPC对应APPID
+	VpcAppId *uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
+
+	// 对端VPC所对应的Uin
+	VpcUin *string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+
+	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
+	VpcSubAccountUin *string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
 }
 
 func (r *DescribeVpcTaskResultRequest) ToJsonString() string {
@@ -9833,7 +9842,7 @@ type DescribeVpcTaskResultResponse struct {
 		Status 		*string 	`json:"Status,omitempty" name:"Status"`
 
 		// 异步任务执行输出。
-		Output 		*interface{} 	`json:"Output,omitempty" name:"Output"`
+		Output 		*string 	`json:"Output,omitempty" name:"Output"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId 	*string 	`json:"RequestId,omitempty" name:"RequestId"`

@@ -1,0 +1,1 @@
+module "github.com/qyzhaoxun/tencentcloud-sdk-go"
