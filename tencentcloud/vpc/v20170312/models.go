@@ -9687,43 +9687,43 @@ type CreateNetworkInterfaceExRequest struct {
 	*tchttp.BaseRequest
 
 	// 对端VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
-	VpcId *string `json:"VpcId,omitempty" name:"VpcId"`
+	VpcId 							*string `json:"VpcId,omitempty" name:"VpcId"`
 
 	// 对端VPC对应APPID
-	VpcAppId *uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
+	VpcAppId 						*uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
 
 	// 对端VPC所对应的Uin
-	VpcUin *string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+	VpcUin 							*string `json:"VpcUin,omitempty" name:"VpcUin"`
 
 	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
-	VpcSubAccountUin *string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
+	VpcSubAccountUin 				*string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
 
 	// 弹性网卡名称，最大长度不能超过60个字节。
-	NetworkInterfaceName *string `json:"NetworkInterfaceName,omitempty" name:"NetworkInterfaceName"`
+	NetworkInterfaceName 			*string `json:"NetworkInterfaceName,omitempty" name:"NetworkInterfaceName"`
 
 	// 云服务实例ID。
-	InstanceId 	*string `json:"InstanceId,omitempty" name:"InstanceId"`
+	InstanceId 						*string `json:"InstanceId,omitempty" name:"InstanceId"`
 
 	// 弹性网卡所在的子网实例ID，例如：subnet-0ap8nwca。当ReservedAddress=false时，需要指定SubnetId
-	SubnetId *string `json:"SubnetId,omitempty" name:"SubnetId"`
+	SubnetId 						*string `json:"SubnetId,omitempty" name:"SubnetId"`
 
 	// 弹性网卡描述，可任意命名，但不得超过60个字符。
-	NetworkInterfaceDescription *string `json:"NetworkInterfaceDescription,omitempty" name:"NetworkInterfaceDescription"`
+	NetworkInterfaceDescription 	*string `json:"NetworkInterfaceDescription,omitempty" name:"NetworkInterfaceDescription"`
 
 	// 是否保留网段分配IP，默认为true；当ReservedAddress=false时，需要指定SubnetId
-	IsReservedAddress 	*bool 	`json:"IsReservedAddress,omitempty" name:"IsReservedAddress"`
+	IsReservedAddress 				*bool 	`json:"IsReservedAddress,omitempty" name:"IsReservedAddress"`
 
 	// 业务标识，默认为dockerMaster。
-	Business 	*string 	`json:"Business,omitempty" name:"Business"`
+	Business 						*string `json:"Business,omitempty" name:"Business"`
 
 	// 业务所属项目，默认为Docker。
-	BusinessOwner 	*string 	`json:"BusinessOwner,omitempty" name:"BusinessOwner"`
+	BusinessOwner 					*string `json:"BusinessOwner,omitempty" name:"BusinessOwner"`
 
 	// 是否跨租户创建网卡。默认为true。
-	IsCrossTenant 	*bool 		`json:"IsCrossTenant,omitempty" name:"IsCrossTenant"`
+	IsCrossTenant 					*bool 	`json:"IsCrossTenant,omitempty" name:"IsCrossTenant"`
 
 	// 指定动态分配IP的个数。PrivateIpAddresses和SecondaryPrivateIpAddressCount一起，单次最多分配10个IP。。
-	SecondaryPrivateIpAddressCount *uint64 `json:"SecondaryPrivateIpAddressCount,omitempty" name:"SecondaryPrivateIpAddressCount"`
+	SecondaryPrivateIpAddressCount 	*uint64 `json:"SecondaryPrivateIpAddressCount,omitempty" name:"SecondaryPrivateIpAddressCount"`
 
 	// 指定的内网IP信息，单次最多指定10个。
 	PrivateIpAddresses []*PrivateIpAddressSpecification `json:"PrivateIpAddresses,omitempty" name:"PrivateIpAddresses" list`
@@ -9747,7 +9747,7 @@ type CreateNetworkInterfaceExResponse struct {
 		// NetworkInterface *NetworkInterface `json:"NetworkInterface" name:"NetworkInterface"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
-		RequestId *string `json:"RequestId,omitempty" name:"RequestId"`
+		RequestId 		*string `json:"RequestId,omitempty" name:"RequestId"`
 	} `json:"Response"`
 }
 
@@ -9764,22 +9764,22 @@ type DeleteNetworkInterfaceExRequest struct {
 	*tchttp.BaseRequest
 
 	// VPC实例ID。可通过DescribeVpcs接口返回值中的VpcId获取。
-	VpcId 	*string 	`json:"VpcId,omitempty" name:"VpcId"`
+	VpcId 				*string 	`json:"VpcId,omitempty" name:"VpcId"`
 
 	// 对端VPC对应APPID
-	VpcAppId *uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
+	VpcAppId 			*uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
 
 	// 对端VPC所对应的Uin
-	VpcUin *string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+	VpcUin 				*string 	`json:"VpcUin,omitempty" name:"VpcUin"`
 
 	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
-	VpcSubAccountUin *string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
+	VpcSubAccountUin 	*string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
 
 	// 弹性网卡实例ID，例如：eni-m6dyj72l。
-	NetworkInterfaceId *string `json:"NetworkInterfaceId,omitempty" name:"NetworkInterfaceId"`
+	NetworkInterfaceId 	*string `json:"NetworkInterfaceId,omitempty" name:"NetworkInterfaceId"`
 
 	// 是否跨租户创建网卡。默认为true。
-	IsCrossTenant 	*bool 		`json:"IsCrossTenant,omitempty" name:"IsCrossTenant"`
+	IsCrossTenant 		*bool 		`json:"IsCrossTenant,omitempty" name:"IsCrossTenant"`
 }
 
 func (r *DeleteNetworkInterfaceExRequest) ToJsonString() string {
@@ -9796,7 +9796,7 @@ type DeleteNetworkInterfaceExResponse struct {
 	Response *struct {
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
-		RequestId *string `json:"RequestId,omitempty" name:"RequestId"`
+		RequestId 	*string `json:"RequestId,omitempty" name:"RequestId"`
 	} `json:"Response"`
 }
 
@@ -9813,16 +9813,16 @@ type DescribeVpcTaskResultRequest struct {
 	*tchttp.BaseRequest
 
 	// 异步任务请求返回的RequestId。
-	TaskId 		*string 	`json:"TaskId,omitempty" name:"TaskId"`
+	TaskId 				*string 	`json:"TaskId,omitempty" name:"TaskId"`
 
 	// 对端VPC对应APPID
-	VpcAppId *uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
+	VpcAppId 			*uint64 `json:"VpcAppId,omitempty" name:"VpcAppId"`
 
 	// 对端VPC所对应的Uin
-	VpcUin *string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+	VpcUin 				*string 	`json:"VpcUin,omitempty" name:"VpcUin"`
 
 	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
-	VpcSubAccountUin *string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
+	VpcSubAccountUin 	*string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
 }
 
 func (r *DescribeVpcTaskResultRequest) ToJsonString() string {
@@ -9882,5 +9882,241 @@ func (r *DescribeVpcTaskResultResponse) ToJsonString() string {
 }
 
 func (r *DescribeVpcTaskResultResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+// 查询单CVM跨租户弹性网卡配额
+type DescribeNetworkInterfaceLimitExRequest struct {
+	*tchttp.BaseRequest
+
+	// 要查询的CVM实例ID。
+	InstanceId 			*string 	`json:"InstanceId,omitempty" name:"InstanceId"`
+
+	// 对端VPC对应APPID
+	VpcAppId 			*uint64 	`json:"VpcAppId,omitempty" name:"VpcAppId"`
+
+	// 对端VPC所对应的Uin
+	VpcUin 				*string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+
+	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
+	VpcSubAccountUin	*string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
+
+	// 产品业务标志
+	Business 			*string 	`json:"Business,omitempty" name:"Business"`
+
+	// 产品唯一资源ID
+	BusinessOwner 		*string 	`json:"BusinessOwner,omitempty" name:"BusinessOwner"`
+}
+
+func (r *DescribeNetworkInterfaceLimitExRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DescribeNetworkInterfaceLimitExRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DescribeNetworkInterfaceLimitExResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 弹性网卡配额
+		EniQuantity							*uint64 	`json:"EniQuantity,omitempty" name:"EniQuantity"`
+
+		// 每个弹性网卡上可分配的IP配额
+		EniPrivateIpAddressQuantity 		*uint64 	`json:"Output,EniPrivateIpAddressQuantity" name:"EniPrivateIpAddressQuantity"`
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId 							*string 	`json:"RequestId,omitempty" name:"RequestId"`
+
+	} `json:"Response"`
+}
+
+func (r *DescribeNetworkInterfaceLimitExResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DescribeNetworkInterfaceLimitExResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+// 查询跨租户弹性网卡信息
+type DescribeNetworkInterfacesExRequest struct {
+	*tchttp.BaseRequest
+
+	// 弹性网卡实例ID查询。形如：eni-pxir56ns。每次请求的实例的上限为100。参数不支持同时指定NetworkInterfaceIds和Filters。
+	NetworkInterfaceIds []*string `json:"NetworkInterfaceIds,omitempty" name:"NetworkInterfaceIds" list`
+
+	// 过滤条件，参数不支持同时指定NetworkInterfaceIds和Filters。
+	// <li>vpc-id - String - （过滤条件）VPC实例ID，形如：vpc-f49l6u0z。</li>
+	// <li>subnet-id - String - （过滤条件）所属子网实例ID，形如：subnet-f49l6u0z。</li>
+	// <li>network-interface-id - String - （过滤条件）弹性网卡实例ID，形如：eni-5k56k7k7。</li>
+	// <li>attachment.instance-id - String - （过滤条件）绑定的云服务器实例ID，形如：ins-3nqpdn3i。</li>
+	// <li>business-owner - String - （过滤条件）产品唯一资源ID。</li>
+	Filters 			[]*Filter `json:"Filters,omitempty" name:"Filters" list`
+
+	// 偏移量，默认为0。
+	Offset 				*uint64 `json:"Offset,omitempty" name:"Offset"`
+
+	// 返回数量，默认为20，最大值为100。
+	Limit 				*uint64 `json:"Limit,omitempty" name:"Limit"`
+
+	// 对端VPC对应APPID
+	VpcAppId 			*uint64 	`json:"VpcAppId,omitempty" name:"VpcAppId"`
+
+	// 对端VPC所对应的Uin
+	VpcUin 				*string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+
+	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
+	VpcSubAccountUin	*string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
+
+	// 产品业务标志
+	Business 			*string 	`json:"Business,omitempty" name:"Business"`
+
+	// 产品唯一资源ID
+	BusinessOwner 		*string 	`json:"BusinessOwner,omitempty" name:"BusinessOwner"`
+}
+
+func (r *DescribeNetworkInterfacesExRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DescribeNetworkInterfacesExRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DescribeNetworkInterfacesExResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 实例详细信息列表。
+		NetworkInterfaceSet []*NetworkInterface `json:"NetworkInterfaceSet,omitempty" name:"NetworkInterfaceSet" list`
+
+		// 符合条件的实例数量。
+		TotalCount 		*uint64 `json:"TotalCount,omitempty" name:"TotalCount"`
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId 		*string 	`json:"RequestId,omitempty" name:"RequestId"`
+
+	} `json:"Response"`
+}
+
+func (r *DescribeNetworkInterfacesExResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DescribeNetworkInterfacesExResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+// 绑定跨租户弹性网卡
+type AttachNetworkInterfaceExRequest struct {
+	*tchttp.BaseRequest
+
+	// 弹性网卡实例ID，例如：eni-m6dyj72l。
+	NetworkInterfaceId 	*string `json:"NetworkInterfaceId,omitempty" name:"NetworkInterfaceId"`
+
+	// CVM实例ID。形如：ins-r8hr2upy。
+	InstanceId 			*string `json:"InstanceId,omitempty" name:"InstanceId"`
+
+	// 对端VPC对应APPID
+	VpcAppId 			*uint64 	`json:"VpcAppId,omitempty" name:"VpcAppId"`
+
+	// 对端VPC所对应的Uin
+	VpcUin 				*string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+
+	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
+	VpcSubAccountUin	*string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
+
+	// 产品业务标志
+	Business 			*string 	`json:"Business,omitempty" name:"Business"`
+
+	// 产品唯一资源ID
+	BusinessOwner 		*string 	`json:"BusinessOwner,omitempty" name:"BusinessOwner"`
+}
+
+func (r *AttachNetworkInterfaceExRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *AttachNetworkInterfaceExRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type AttachNetworkInterfaceExResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId 		*string 	`json:"RequestId,omitempty" name:"RequestId"`
+
+	} `json:"Response"`
+}
+
+func (r *AttachNetworkInterfaceExResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *AttachNetworkInterfaceExResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+// 解绑跨租户弹性网卡
+type DetachNetworkInterfaceExRequest struct {
+	*tchttp.BaseRequest
+
+	// 弹性网卡实例ID，例如：eni-m6dyj72l。
+	NetworkInterfaceId 	*string `json:"NetworkInterfaceId,omitempty" name:"NetworkInterfaceId"`
+
+	// CVM实例ID。形如：ins-r8hr2upy。
+	InstanceId 			*string `json:"InstanceId,omitempty" name:"InstanceId"`
+
+	// 对端VPC对应APPID
+	VpcAppId 			*uint64 	`json:"VpcAppId,omitempty" name:"VpcAppId"`
+
+	// 对端VPC所对应的Uin
+	VpcUin 				*string 	`json:"VpcUin,omitempty" name:"VpcUin"`
+
+	// 对端VPC所对应的子账号UIN，一般与VpcUin保持一致即可
+	VpcSubAccountUin	*string `json:"VpcSubAccountUin,omitempty" name:"VpcSubAccountUin"`
+
+	// 产品业务标志
+	Business 			*string 	`json:"Business,omitempty" name:"Business"`
+
+	// 产品唯一资源ID
+	BusinessOwner 		*string 	`json:"BusinessOwner,omitempty" name:"BusinessOwner"`
+}
+
+func (r *DetachNetworkInterfaceExRequest) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DetachNetworkInterfaceExRequest) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DetachNetworkInterfaceExResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId 		*string 	`json:"RequestId,omitempty" name:"RequestId"`
+
+	} `json:"Response"`
+}
+
+func (r *DetachNetworkInterfaceExResponse) ToJsonString() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
+func (r *DetachNetworkInterfaceExResponse) FromJsonString(s string) error {
 	return json.Unmarshal([]byte(s), &r)
 }

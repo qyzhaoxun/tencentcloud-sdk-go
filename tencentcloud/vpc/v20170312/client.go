@@ -5008,3 +5008,104 @@ func (c *Client) DescribeVpcTaskResult(request *DescribeVpcTaskResultRequest) (r
     err = c.Send(request, response)
     return
 }
+
+func NewDescribeNetworkInterfaceLimitExRequest() (request *DescribeNetworkInterfaceLimitExRequest) {
+    request = &DescribeNetworkInterfaceLimitExRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DescribeNetworkInterfaceLimitEx")
+    return
+}
+
+func NewDescribeNetworkInterfaceLimitExResponse() (response *DescribeNetworkInterfaceLimitExResponse) {
+    response = &DescribeNetworkInterfaceLimitExResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DescribeNetworkInterfaceLimitEx）用于产品侧查询跨租户的指定实例弹性网卡配额。根据CVM实例ID查询弹性网卡配额，返回该CVM实例弹性网卡配额，以及弹性网卡可以分配的IP配额。
+func (c *Client) DescribeNetworkInterfaceLimitEx(request *DescribeNetworkInterfaceLimitExRequest) (response *DescribeNetworkInterfaceLimitExResponse, err error) {
+    if request == nil {
+        request = NewDescribeNetworkInterfaceLimitExRequest()
+    }
+    response = NewDescribeNetworkInterfaceLimitExResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDescribeNetworkInterfacesExRequest() (request *DescribeNetworkInterfacesExRequest) {
+    request = &DescribeNetworkInterfacesExRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DescribeNetworkInterfacesEx")
+    return
+}
+
+func NewDescribeNetworkInterfacesExResponse() (response *DescribeNetworkInterfacesExResponse) {
+    response = &DescribeNetworkInterfacesExResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DescribeNetworkInterfacesEx）功能限制参考DescribeNetworkInterfaces 。
+// 本接口用于查询跨租户网卡的信息，通过filter方式进行多重过滤；过滤条件仅支持NetworkInterfaceIds vpcId subnetId BusinessOwner instanceId 几个
+func (c *Client) DescribeNetworkInterfacesEx(request *DescribeNetworkInterfacesExRequest) (response *DescribeNetworkInterfacesExResponse, err error) {
+    if request == nil {
+        request = NewDescribeNetworkInterfacesExRequest()
+    }
+    response = NewDescribeNetworkInterfacesExResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewAttachNetworkInterfaceExRequest() (request *AttachNetworkInterfaceExRequest) {
+    request = &AttachNetworkInterfaceExRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "AttachNetworkInterfaceEx")
+    return
+}
+
+func NewAttachNetworkInterfaceExResponse() (response *AttachNetworkInterfaceExResponse) {
+    response = &AttachNetworkInterfaceExResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（AttachNetworkInterfaceEx）用于绑定跨租户弹性网卡，需要是解绑但还未销毁的网卡为跨租户弹性网卡
+func (c *Client) AttachNetworkInterfaceEx(request *AttachNetworkInterfaceExRequest) (response *AttachNetworkInterfaceExResponse, err error) {
+    if request == nil {
+        request = NewAttachNetworkInterfaceExRequest()
+    }
+    response = NewAttachNetworkInterfaceExResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDetachNetworkInterfaceExRequest() (request *DetachNetworkInterfaceExRequest) {
+    request = &DetachNetworkInterfaceExRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DetachNetworkInterfaceEx")
+    return
+}
+
+func NewDetachNetworkInterfaceExResponse() (response *DetachNetworkInterfaceExResponse) {
+    response = &DetachNetworkInterfaceExResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// 本接口（DetachNetworkInterfaceEx）用于解绑跨租户弹性网卡但是不销毁
+func (c *Client) DetachNetworkInterfaceEx(request *DetachNetworkInterfaceExRequest) (response *DetachNetworkInterfaceExResponse, err error) {
+    if request == nil {
+        request = NewDetachNetworkInterfaceExRequest()
+    }
+    response = NewDetachNetworkInterfaceExResponse()
+    err = c.Send(request, response)
+    return
+}
