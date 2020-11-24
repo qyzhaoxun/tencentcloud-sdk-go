@@ -9925,7 +9925,7 @@ type DescribeNetworkInterfaceLimitExResponse struct {
 		EniQuantity							*uint64 	`json:"EniQuantity,omitempty" name:"EniQuantity"`
 
 		// 每个弹性网卡上可分配的IP配额
-		EniPrivateIpAddressQuantity 		*uint64 	`json:"Output,EniPrivateIpAddressQuantity" name:"EniPrivateIpAddressQuantity"`
+		EniPrivateIpAddressQuantity 		*uint64 	`json:"EniPrivateIpAddressQuantity,omitempty" name:"EniPrivateIpAddressQuantity"`
 
 		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
 		RequestId 							*string 	`json:"RequestId,omitempty" name:"RequestId"`
