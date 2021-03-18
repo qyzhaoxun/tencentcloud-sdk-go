@@ -1,0 +1,4 @@
+github.com/cihub/seelog v0.0.0-20151216151435-d2c6e5aa9fbf h1:XI2tOTCBqEnMyN2j1yPBI07yQHeywUSCEf8YWqf0oKw=
+github.com/cihub/seelog v0.0.0-20151216151435-d2c6e5aa9fbf/go.mod h1:9d6lWj8KzO/fd/NrVaLscBKmPigpZpn5YawRPw+e3Yo=
+github.com/tencentcloud/tencentcloud-sdk-go v1.0.121 h1:onlMsCfByzZvRYNYvOPA1/JuibyErqmZdqpAFm8q8sA=
+github.com/tencentcloud/tencentcloud-sdk-go v1.0.121/go.mod h1:asUz5BPXxgoPGaRgZaVm1iGcUAuHyYUo1nXqKa83cvI=
