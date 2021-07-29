@@ -257,34 +257,6 @@ func (c *Client) AssignIpv6SubnetCidrBlock(request *AssignIpv6SubnetCidrBlockReq
     return
 }
 
-func NewAssignPrivateIpAddressesRequest() (request *AssignPrivateIpAddressesRequest) {
-    request = &AssignPrivateIpAddressesRequest{
-        BaseRequest: &tchttp.BaseRequest{},
-    }
-    request.Init().WithApiInfo("vpc", APIVersion, "AssignPrivateIpAddresses")
-    return
-}
-
-func NewAssignPrivateIpAddressesResponse() (response *AssignPrivateIpAddressesResponse) {
-    response = &AssignPrivateIpAddressesResponse{
-        BaseResponse: &tchttp.BaseResponse{},
-    }
-    return
-}
-
-// 本接口（AssignPrivateIpAddresses）用于弹性网卡申请内网 IP。
-// * 一个弹性网卡支持绑定的IP地址是有限制的，更多资源限制信息详见<a href="/document/product/576/18527">弹性网卡使用限制</a>。
-// * 可以指定内网IP地址申请，内网IP地址类型不能为主IP，主IP已存在，不能修改，内网IP必须要弹性网卡所在子网内，而且不能被占用。
-// * 在弹性网卡上申请一个到多个辅助内网IP，接口会在弹性网卡所在子网网段内返回指定数量的辅助内网IP。
-func (c *Client) AssignPrivateIpAddresses(request *AssignPrivateIpAddressesRequest) (response *AssignPrivateIpAddressesResponse, err error) {
-    if request == nil {
-        request = NewAssignPrivateIpAddressesRequest()
-    }
-    response = NewAssignPrivateIpAddressesResponse()
-    err = c.Send(request, response)
-    return
-}
-
 func NewAssociateAddressRequest() (request *AssociateAddressRequest) {
     request = &AssociateAddressRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -2997,32 +2969,6 @@ func (c *Client) DescribeVpcLimits(request *DescribeVpcLimitsRequest) (response 
     return
 }
 
-func NewDescribeVpcPrivateIpAddressesRequest() (request *DescribeVpcPrivateIpAddressesRequest) {
-    request = &DescribeVpcPrivateIpAddressesRequest{
-        BaseRequest: &tchttp.BaseRequest{},
-    }
-    request.Init().WithApiInfo("vpc", APIVersion, "DescribeVpcPrivateIpAddresses")
-    return
-}
-
-func NewDescribeVpcPrivateIpAddressesResponse() (response *DescribeVpcPrivateIpAddressesResponse) {
-    response = &DescribeVpcPrivateIpAddressesResponse{
-        BaseResponse: &tchttp.BaseResponse{},
-    }
-    return
-}
-
-// 本接口（DescribeVpcPrivateIpAddresses）用于查询VPC内网IP信息。<br />
-// 只能查询已使用的IP信息，当查询未使用的IP时，本接口不会报错，但不会出现在返回结果里。
-func (c *Client) DescribeVpcPrivateIpAddresses(request *DescribeVpcPrivateIpAddressesRequest) (response *DescribeVpcPrivateIpAddressesResponse, err error) {
-    if request == nil {
-        request = NewDescribeVpcPrivateIpAddressesRequest()
-    }
-    response = NewDescribeVpcPrivateIpAddressesResponse()
-    err = c.Send(request, response)
-    return
-}
-
 func NewDescribeVpcsRequest() (request *DescribeVpcsRequest) {
     request = &DescribeVpcsRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -4880,32 +4826,6 @@ func (c *Client) UnassignIpv6SubnetCidrBlock(request *UnassignIpv6SubnetCidrBloc
     return
 }
 
-func NewUnassignPrivateIpAddressesRequest() (request *UnassignPrivateIpAddressesRequest) {
-    request = &UnassignPrivateIpAddressesRequest{
-        BaseRequest: &tchttp.BaseRequest{},
-    }
-    request.Init().WithApiInfo("vpc", APIVersion, "UnassignPrivateIpAddresses")
-    return
-}
-
-func NewUnassignPrivateIpAddressesResponse() (response *UnassignPrivateIpAddressesResponse) {
-    response = &UnassignPrivateIpAddressesResponse{
-        BaseResponse: &tchttp.BaseResponse{},
-    }
-    return
-}
-
-// 本接口（UnassignPrivateIpAddresses）用于弹性网卡退还内网 IP。
-// * 退还弹性网卡上的辅助内网IP，接口自动解关联弹性公网 IP。不能退还弹性网卡的主内网IP。
-func (c *Client) UnassignPrivateIpAddresses(request *UnassignPrivateIpAddressesRequest) (response *UnassignPrivateIpAddressesResponse, err error) {
-    if request == nil {
-        request = NewUnassignPrivateIpAddressesRequest()
-    }
-    response = NewUnassignPrivateIpAddressesResponse()
-    err = c.Send(request, response)
-    return
-}
-
 func NewQueryTaskRequest() (request *QueryTaskRequest) {
     request = &QueryTaskRequest{
         BaseRequest: &tchttp.BaseRequest{},
@@ -5106,6 +5026,215 @@ func (c *Client) DetachNetworkInterfaceEx(request *DetachNetworkInterfaceExReque
         request = NewDetachNetworkInterfaceExRequest()
     }
     response = NewDetachNetworkInterfaceExResponse()
+    err = c.Send(request, response)
+    return
+}
+
+
+// gokutang edit :
+
+
+func NewApplyPrivateIpAddressRequest() (request *ApplyPrivateIpAddressRequest) {
+    request = &ApplyPrivateIpAddressRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "ApplyPrivateIpAddress")
+    return
+}
+
+func NewApplyPrivateIpAddressResponse() (response *ApplyPrivateIpAddressResponse) {
+    response = &ApplyPrivateIpAddressResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// ApplyPrivateIpAddress
+// 本接口（ApplyPrivateIpAddress）仅用于内部服务申请内网ip，接口不对外。用于服务保留固定IP。
+//
+// 可能返回的错误码:
+//  INVALIDPARAMETERVALUE = "InvalidParameterValue"
+//  INVALIDPARAMETERVALUE_LIMITEXCEEDED = "InvalidParameterValue.LimitExceeded"
+//  INVALIDPARAMETERVALUE_MALFORMED = "InvalidParameterValue.Malformed"
+//  INVALIDPARAMETERVALUE_RANGE = "InvalidParameterValue.Range"
+//  INVALIDPARAMETERVALUE_RESERVED = "InvalidParameterValue.Reserved"
+//  INVALIDPARAMETERVALUE_TOOLONG = "InvalidParameterValue.TooLong"
+//  LIMITEXCEEDED = "LimitExceeded"
+//  RESOURCEINUSE = "ResourceInUse"
+//  RESOURCEINSUFFICIENT = "ResourceInsufficient"
+//  RESOURCENOTFOUND = "ResourceNotFound"
+//  UNSUPPORTEDOPERATION = "UnsupportedOperation"
+//  UNSUPPORTEDOPERATION_INVALIDSTATE = "UnsupportedOperation.InvalidState"
+//  UNSUPPORTEDOPERATION_MUTEXOPERATIONTASKRUNNING = "UnsupportedOperation.MutexOperationTaskRunning"
+//  UNSUPPORTEDOPERATION_RESOURCEMISMATCH = "UnsupportedOperation.ResourceMismatch"
+func (c *Client) ApplyPrivateIpAddress(request *ApplyPrivateIpAddressRequest) (response *ApplyPrivateIpAddressResponse, err error) {
+    if request == nil {
+        request = NewApplyPrivateIpAddressRequest()
+    }
+    response = NewApplyPrivateIpAddressResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewAssignPrivateIpAddressesRequest() (request *AssignPrivateIpAddressesRequest) {
+    request = &AssignPrivateIpAddressesRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "AssignPrivateIpAddresses")
+    return
+}
+
+func NewAssignPrivateIpAddressesResponse() (response *AssignPrivateIpAddressesResponse) {
+    response = &AssignPrivateIpAddressesResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// AssignPrivateIpAddresses
+// 本接口（AssignPrivateIpAddresses）用于弹性网卡申请内网 IP。
+//
+// * 一个弹性网卡支持绑定的IP地址是有限制的，更多资源限制信息详见<a href="/document/product/576/18527">弹性网卡使用限制</a>。
+//
+// * 可以指定内网IP地址申请，内网IP地址类型不能为主IP，主IP已存在，不能修改，内网IP必须要弹性网卡所在子网内，而且不能被占用。
+//
+// * 在弹性网卡上申请一个到多个辅助内网IP，接口会在弹性网卡所在子网网段内返回指定数量的辅助内网IP。
+//
+// 可能返回的错误码:
+//  INVALIDPARAMETERVALUE_LIMITEXCEEDED = "InvalidParameterValue.LimitExceeded"
+//  INVALIDPARAMETERVALUE_MALFORMED = "InvalidParameterValue.Malformed"
+//  INVALIDPARAMETERVALUE_RANGE = "InvalidParameterValue.Range"
+//  INVALIDPARAMETERVALUE_RESERVED = "InvalidParameterValue.Reserved"
+//  LIMITEXCEEDED = "LimitExceeded"
+//  RESOURCEINUSE = "ResourceInUse"
+//  RESOURCEINSUFFICIENT = "ResourceInsufficient"
+//  RESOURCENOTFOUND = "ResourceNotFound"
+//  UNSUPPORTEDOPERATION = "UnsupportedOperation"
+//  UNSUPPORTEDOPERATION_INVALIDSTATE = "UnsupportedOperation.InvalidState"
+//  UNSUPPORTEDOPERATION_MUTEXOPERATIONTASKRUNNING = "UnsupportedOperation.MutexOperationTaskRunning"
+//  UNSUPPORTEDOPERATION_RESOURCEMISMATCH = "UnsupportedOperation.ResourceMismatch"
+func (c *Client) AssignPrivateIpAddresses(request *AssignPrivateIpAddressesRequest) (response *AssignPrivateIpAddressesResponse, err error) {
+    if request == nil {
+        request = NewAssignPrivateIpAddressesRequest()
+    }
+    response = NewAssignPrivateIpAddressesResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewDescribeVpcPrivateIpAddressesRequest() (request *DescribeVpcPrivateIpAddressesRequest) {
+    request = &DescribeVpcPrivateIpAddressesRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "DescribeVpcPrivateIpAddresses")
+    return
+}
+
+func NewDescribeVpcPrivateIpAddressesResponse() (response *DescribeVpcPrivateIpAddressesResponse) {
+    response = &DescribeVpcPrivateIpAddressesResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// DescribeVpcPrivateIpAddresses
+// 本接口（DescribeVpcPrivateIpAddresses）用于查询VPC内网IP信息。<br />
+//
+// 只能查询已使用的IP信息，当查询未使用的IP时，本接口不会报错，但不会出现在返回结果里。
+//
+// 可能返回的错误码:
+//  INVALIDPARAMETERVALUE = "InvalidParameterValue"
+//  INVALIDPARAMETERVALUE_LIMITEXCEEDED = "InvalidParameterValue.LimitExceeded"
+//  INVALIDPARAMETERVALUE_MALFORMED = "InvalidParameterValue.Malformed"
+//  RESOURCENOTFOUND = "ResourceNotFound"
+func (c *Client) DescribeVpcPrivateIpAddresses(request *DescribeVpcPrivateIpAddressesRequest) (response *DescribeVpcPrivateIpAddressesResponse, err error) {
+    if request == nil {
+        request = NewDescribeVpcPrivateIpAddressesRequest()
+    }
+    response = NewDescribeVpcPrivateIpAddressesResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewReturnPrivateIpAddressRequest() (request *ReturnPrivateIpAddressRequest) {
+    request = &ReturnPrivateIpAddressRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "ReturnPrivateIpAddress")
+    return
+}
+
+func NewReturnPrivateIpAddressResponse() (response *ReturnPrivateIpAddressResponse) {
+    response = &ReturnPrivateIpAddressResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// ReturnPrivateIpAddress
+// 本接口（ReturnPrivateIpAddress）仅用于内部服务退还保留IP。
+//
+// 可能返回的错误码:
+//  INVALIDPARAMETERVALUE = "InvalidParameterValue"
+//  INVALIDPARAMETERVALUE_LIMITEXCEEDED = "InvalidParameterValue.LimitExceeded"
+//  INVALIDPARAMETERVALUE_MALFORMED = "InvalidParameterValue.Malformed"
+//  INVALIDPARAMETERVALUE_RANGE = "InvalidParameterValue.Range"
+//  INVALIDPARAMETERVALUE_RESERVED = "InvalidParameterValue.Reserved"
+//  INVALIDPARAMETERVALUE_TOOLONG = "InvalidParameterValue.TooLong"
+//  LIMITEXCEEDED = "LimitExceeded"
+//  RESOURCEINUSE = "ResourceInUse"
+//  RESOURCEINSUFFICIENT = "ResourceInsufficient"
+//  RESOURCENOTFOUND = "ResourceNotFound"
+//  UNSUPPORTEDOPERATION = "UnsupportedOperation"
+//  UNSUPPORTEDOPERATION_INVALIDSTATE = "UnsupportedOperation.InvalidState"
+//  UNSUPPORTEDOPERATION_MUTEXOPERATIONTASKRUNNING = "UnsupportedOperation.MutexOperationTaskRunning"
+//  UNSUPPORTEDOPERATION_RESOURCEMISMATCH = "UnsupportedOperation.ResourceMismatch"
+func (c *Client) ReturnPrivateIpAddress(request *ReturnPrivateIpAddressRequest) (response *ReturnPrivateIpAddressResponse, err error) {
+    if request == nil {
+        request = NewReturnPrivateIpAddressRequest()
+    }
+    response = NewReturnPrivateIpAddressResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewUnassignPrivateIpAddressesRequest() (request *UnassignPrivateIpAddressesRequest) {
+    request = &UnassignPrivateIpAddressesRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vpc", APIVersion, "UnassignPrivateIpAddresses")
+    return
+}
+
+func NewUnassignPrivateIpAddressesResponse() (response *UnassignPrivateIpAddressesResponse) {
+    response = &UnassignPrivateIpAddressesResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// UnassignPrivateIpAddresses
+// 本接口（UnassignPrivateIpAddresses）用于弹性网卡退还内网 IP。
+//
+// * 退还弹性网卡上的辅助内网IP，接口自动解关联弹性公网 IP。不能退还弹性网卡的主内网IP。
+//
+//
+//
+// 本接口是异步完成，如需查询异步任务执行结果，请使用本接口返回的`RequestId`轮询`DescribeVpcTaskResult`接口。
+//
+// 可能返回的错误码:
+//  INVALIDPARAMETERVALUE_LIMITEXCEEDED = "InvalidParameterValue.LimitExceeded"
+//  INVALIDPARAMETERVALUE_MALFORMED = "InvalidParameterValue.Malformed"
+//  RESOURCENOTFOUND = "ResourceNotFound"
+//  UNSUPPORTEDOPERATION = "UnsupportedOperation"
+//  UNSUPPORTEDOPERATION_ATTACHMENTNOTFOUND = "UnsupportedOperation.AttachmentNotFound"
+//  UNSUPPORTEDOPERATION_INVALIDSTATE = "UnsupportedOperation.InvalidState"
+//  UNSUPPORTEDOPERATION_MUTEXOPERATIONTASKRUNNING = "UnsupportedOperation.MutexOperationTaskRunning"
+func (c *Client) UnassignPrivateIpAddresses(request *UnassignPrivateIpAddressesRequest) (response *UnassignPrivateIpAddressesResponse, err error) {
+    if request == nil {
+        request = NewUnassignPrivateIpAddressesRequest()
+    }
+    response = NewUnassignPrivateIpAddressesResponse()
     err = c.Send(request, response)
     return
 }
